@@ -21,11 +21,11 @@
 		}
 		
 		private function init(e:Event){
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
 			stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUP);
 		}
 		
-		private function onKeyDown(e:KeyboardEvent) {
+		private function onKeyPressed(e:KeyboardEvent) {
 			keyStates[e.keyCode] = true;
 		}
 		private function onKeyUP(e:KeyboardEvent)	{

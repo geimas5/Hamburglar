@@ -2,9 +2,20 @@
 	import flash.display.*;
 	
 	public class ViewBase extends MovieClip {
+	
+	private var viewManager:ViewManager;
 
-		public function ViewBase() {
-			// constructor code
-		}
+	public function setViewManager(viewManager:ViewManager) : void {
+		this.viewManager = viewManager;
+	}
+	
+	public function getViewManager() : ViewManager {
+		return viewManager;
+	}
+
+	public function ViewBase() {
+	}
+		
+		
 	}
 }
