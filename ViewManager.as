@@ -20,8 +20,12 @@
 			addChild(activeView);
 		}
 		
-		public function showGame() : void {
-			setView(new GameView());
+		public function showGame(level:int) : void {
+			setView(new GameView(level));
+		}
+		
+		public function showLevelSelect() : void {
+			setView(new LevelSelectView());
 		}
 		
 		public function showMenu() : void {
