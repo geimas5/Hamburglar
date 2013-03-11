@@ -1,6 +1,0 @@
-﻿package  {
-	
-	public class LevelBase {
-	}
-	
-}

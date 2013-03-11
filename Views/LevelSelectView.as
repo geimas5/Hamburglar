@@ -36,6 +36,7 @@
 		private function selectLevel(levelId:int) {
 			selectedLevel = levelId;
 			levelIdLabel.text = String(levelId);
+			levelPreview.levelId = levelId;
 		}
 	}
 }

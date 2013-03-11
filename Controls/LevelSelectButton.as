@@ -1,10 +1,12 @@
 ﻿package Controls {
 	
 	import fl.core.*;
+	import Controls.Layouts.*;
 	
 	public class LevelSelectButton extends UIComponent {
 		
 		private var _levelId:int;
+		private var layout:LevelSelectButtonDesign;
 		
 		public function LevelSelectButton() {
 		}
@@ -17,7 +19,17 @@
 		public function set levelId(levelId:int) : void {
 			this._levelId = levelId;
 			
-			this.idLevelLabel.text = String(levelId);
+			layout.levelId = levelId;
+			validateNow();
+		}
+		
+		override protected function configUI() : void {
+			super.configUI();
+		
+			layout = new LevelSelectButtonDesign();
+			layout.levelId = this._levelId;
+			
+			addChild(layout);
 		}
 	}
 }
