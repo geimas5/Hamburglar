@@ -18,6 +18,7 @@
 			this.activeView = view;
 			this.activeView.setViewManager(this);
 			addChild(activeView);
+			MusicPlayer.getInstance().setView(this.activeView);
 		}
 		
 		public function showGame(level:int) : void {

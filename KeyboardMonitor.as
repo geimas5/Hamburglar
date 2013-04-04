@@ -6,12 +6,20 @@
 	public class KeyboardMonitor extends MovieClip {
 		
 		private var keyStates:Array = new Array();
-
+		private static var _instance:KeyboardMonitor = null;
+		
 		public function KeyboardMonitor() {
 			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 		
-		public function getKeyState(key:int): Boolean {
+		public static function getInstance() : KeyboardMonitor {
+			if(_instance == null)	
+				_instance = new KeyboardMonitor();
+			
+			return _instance;
+		}
+		
+		public function getKeyState(key:int) : Boolean {
 			var keyState = keyStates[key];
 			
 			if(keyState == null)
@@ -28,7 +36,7 @@
 		private function onKeyPressed(e:KeyboardEvent) {
 			keyStates[e.keyCode] = true;
 		}
-		private function onKeyUP(e:KeyboardEvent)	{
+		private function onKeyUP(e:KeyboardEvent) {
 			keyStates[e.keyCode] = false;
 		}
 	}

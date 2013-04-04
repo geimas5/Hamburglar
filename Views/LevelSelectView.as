@@ -1,18 +1,19 @@
 ﻿package Views {
-		import flash.events.*;
-		import Controls.*;
-		import flash.display.*;
-		import fl.controls.SelectableList;
+	import flash.events.*;
+	import Controls.*;
+	import flash.display.*;
+	import fl.controls.*;
+	import Sounds.*;
 	
 	public class LevelSelectView extends ViewBase {
 		
 		private var selectedLevel:int = 0;
 
 		public function LevelSelectView() {
-			addEventListener(Event.ADDED_TO_STAGE, initButtons);
+			addEventListener(Event.ADDED_TO_STAGE, init);
 		}
 	
-		public function initButtons(evt:Event) : void {
+		public function init(evt:Event) : void {
 			startGameButton.addEventListener(MouseEvent.CLICK, startGame);
 			
 			for(var i:int = 0; i < numChildren; i++) {
@@ -22,6 +23,12 @@
 					child.addEventListener(MouseEvent.CLICK, onSelectLevel);
 				}
 			}
+		}
+		
+		override public function getBackgroundMusic() : Array {
+			var playlist:Array = new Array();
+			playlist.push(new ElevatorMusic());
+			return playlist;
 		}
 	
 		public function startGame(evt:MouseEvent) {
