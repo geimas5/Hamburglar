@@ -1,7 +1,7 @@
 ﻿package Levels {
 	
 	import flash.display.*;
-	
+	import Levels.*;;
 	
 	public class Level4 extends LevelBase {
 		
