@@ -11,11 +11,13 @@
 		private var obstacles:Array = new Array();
 		private var level:LevelBase = null;
 		private var bounds:Rectangle = null;
+		private var cachedBitmap:BitmapData = null;
 
 		public function ObstacleTester(obstacle:Array, level:LevelBase) {
 			obstacles = obstacle;
 			this.level = level;
 			this.bounds = level.getBounds(level);
+			this.generateBitmapData();
 		}
 		
 		public function hitTestPoint(point:Point) {
@@ -23,10 +25,9 @@
 		}
 		
 		public function hitTestCoord(x:Number, y:Number) {
-			for each(var obj:DisplayObject in this.obstacles) {
-				if(obj.hitTestPoint(x, y, true))
-					return true;
-			}
+			//trace(x,y, cachedBitmap.getPixel(x, y) < 0xFFFFFF, cachedBitmap.getPixel(x, y));
+			if(cachedBitmap.getPixel(x, y) < 0xFFFFFF)
+				return true;
 			
 			return false;
 		}
@@ -43,8 +44,18 @@
 			return false;
 		}
 		
+		private function generateBitmapData() : void {			
+			var image:BitmapData = new BitmapData(level.width, level.height, true);
+			
+			for each(var obstacle:DisplayObject in this.obstacles) {
+				image.draw(obstacle);
+			}
+			
+			this.cachedBitmap = image;
+		}
+		
 		// Based on http://www.freeactionscript.com/tag/pixel-perfect-hit-test-with-rotation/
-		function isHitHelper(object1:DisplayObject, object2:DisplayObject, tolerance:int = 255) : Boolean {			
+		private function isHitHelper(object1:DisplayObject, object2:DisplayObject, tolerance:int = 255) : Boolean {			
 			if (!object1.hitTestObject(object2))
 				return false;
 			

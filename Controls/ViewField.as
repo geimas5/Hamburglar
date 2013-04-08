@@ -85,7 +85,7 @@
 			for(var i:int = 0; i < _numberOfSegments; i++) {
 				var segmentStart:Number = startAngle + (segmentAngle * i);
 				var segmentEnd:Number = startAngle + (segmentAngle * (i + 1));
-				var segment:Shape = createViewFieldTriangle(segmentStart, segmentEnd, _radius);
+				var segment:Shape = createViewFieldTriangle(segmentStart, segmentEnd, _suspectRadius);
 				addChild(segment);
 				
 				if(!isHit(segment)) {
@@ -128,7 +128,7 @@
 		
 		private function createViewFieldTriangle(startAngle:Number, endAngle:Number, radius:int):Shape {
 			var triangle:Shape = new Shape();
-			triangle.graphics.beginFill(0x2147AB);
+			triangle.graphics.beginFill(0x2147AB);			
 			triangle.graphics.moveTo(0, 0);
 			
 			triangle.graphics.lineTo(calculatePointX(startAngle, radius), calculatePointY(startAngle, radius));

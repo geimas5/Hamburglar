@@ -1,11 +1,11 @@
 ﻿package Pathfinding {
 	import flash.geom.*;
-	import flash.display.BitmapData;
-	import flash.display.MovieClip;
+	import flash.display.*;
+	import System.*;
 	
 	public class GraphBuilder {
 		private var graphCoordinates:GraphCoordinates = null;
-		private var obstacles:Array;
+		private var obstacleTester:ObstacleTester;
 		private var bounds:Rectangle;
 		private var graphHeight:int;
 		private var graphWidth:int;
@@ -15,8 +15,8 @@
 		private var verticies:Array = null;
 		private var edges:Array = null;
 		
-		public function GraphBuilder(obstacles:Array, bounds:Rectangle, graphCoordinates:GraphCoordinates) {
-			this.obstacles = obstacles;
+		public function GraphBuilder(obstacleTester:ObstacleTester, bounds:Rectangle, graphCoordinates:GraphCoordinates) {
+			this.obstacleTester = obstacleTester;
 			this.graphCoordinates = graphCoordinates;
 			this.bounds = bounds;
 			this.graphHeight = graphCoordinates.convertToGraph(bounds.height);
@@ -77,15 +77,13 @@
 		}
 		
 		private function isBlocked(x:int, y:int) : Boolean {
-			for each(var o:MovieClip in obstacles) {
-				var startX = this.graphCoordinates.convertFromGraph(x - 1) + (this.graphCoordinates.resolution / 2);
-				var startY = this.graphCoordinates.convertFromGraph(y - 1) + (this.graphCoordinates.resolution / 2);
-				
-				for(var tX = startX; tX < startX + this.graphCoordinates.resolution; tX++){
-					for(var tY = startY; tY < startY + this.graphCoordinates.resolution; tY++){
-						if(o.hitTestPoint(tX, tY, true))
-							return true;
-					}
+			var startX = this.graphCoordinates.convertFromGraph(x - 1) + (this.graphCoordinates.resolution / 2);
+			var startY = this.graphCoordinates.convertFromGraph(y - 1) + (this.graphCoordinates.resolution / 2);
+			
+			for(var tX = startX; tX < startX + this.graphCoordinates.resolution; tX++) {
+				for(var tY = startY; tY < startY + this.graphCoordinates.resolution; tY++) {
+					if(obstacleTester.hitTestCoord(tX, tY))
+						return true;
 				}
 			}
 			return false;

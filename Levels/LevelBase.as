@@ -86,7 +86,7 @@
 		}
 		
 		private function buildGraph() : void {
-			var builder:GraphBuilder = new GraphBuilder(this.obstacles, root.getBounds(this.stage), this._graphCoordinates);
+			var builder:GraphBuilder = new GraphBuilder(this._obstacleTester, root.getBounds(this.stage), this._graphCoordinates);
 			this._graph = builder.buildGraph();
 		}
 		
