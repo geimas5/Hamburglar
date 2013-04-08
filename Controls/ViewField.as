@@ -128,7 +128,14 @@
 		
 		private function createViewFieldTriangle(startAngle:Number, endAngle:Number, radius:int):Shape {
 			var triangle:Shape = new Shape();
-			triangle.graphics.beginFill(0x2147AB);			
+			//triangle.graphics.beginFill(0x2147AB);
+			
+			var ratio:Number = Number(_detectionRadius) / Number(_suspectRadius);
+			var detectionRatio = ratio * 255;
+			var suspectRatio = 255 - detectionRatio;
+			
+			triangle.graphics.beginGradientFill(GradientType.RADIAL, [0xFF3700, 0xFFB300], [1, 1], [detectionRatio, suspectRatio]);
+			
 			triangle.graphics.moveTo(0, 0);
 			
 			triangle.graphics.lineTo(calculatePointX(startAngle, radius), calculatePointY(startAngle, radius));

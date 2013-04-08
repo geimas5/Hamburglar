@@ -8,7 +8,7 @@
 	import Controls.*;
 	import Pathfinding.*;
 	
-	public class Guard extends UIComponent implements ITimeAware {
+	public class Guard extends UIComponent implements ITimeAware, ISecurityObject {
 		
 		private var _obstacles:Array;
 		private var _waypoints:Array;
@@ -22,6 +22,11 @@
 		
 		private var _graphCoordinates:GraphCoordinates = null;
 		private var _graph:IGraph = null;
+		
+		public function Guard() {
+			viewField.detectionRadius = Configuration.GUARD_DETECTION_RADIUS;
+			viewField.suspectRadius = Configuration.GUARD_SUSPECT_RADIUS;
+		}
 		
 		[Inspectable(defaultValue=0)]
 		public function get id() : Number {
@@ -120,6 +125,10 @@
 			var rad:Number = Math.atan2(disy, disx) + (Math.PI / 2);
 			var deg:Number = 360 * rad / (2 * Math.PI);
 			this.rotation = deg;
+		}
+		
+		public function getViewField() : ViewField {
+			return this.viewField;
 		}
 		
 		private function getDistance(p1x:Number, p1y:Number, p2x:Number, p2y:Number) : Number {

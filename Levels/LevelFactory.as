@@ -2,7 +2,7 @@
 	
 	public class LevelFactory {
 
-		public static function createLevel(levelId:int) {
+		public static function createLevel(levelId:int) : LevelBase {
 			var level:LevelBase = null;
 			switch(levelId){
 				case 1: return new Level1();

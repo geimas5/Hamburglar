@@ -14,6 +14,7 @@
 		private var timeAware:Array = new Array();
 		private var guards:Array = new Array();
 		private var waypoints:Array = new Array();
+		private var securityObjects:Array = new Array();
 				
 		private var _obstacleTester:ObstacleTester = null;
 		private var _graphCoordinates:GraphCoordinates = new GraphCoordinates(15);
@@ -27,19 +28,26 @@
 			this.addEventListener(Event.ADDED_TO_STAGE, onInit);
 		}
 		
-		private function onInit(e:Event) {
+		public function pause() : void {
+			this.ticTimer.stop();
+		}
+		
+		public function resume() : void {
+			this._lastTic = getTimer();
+			this.ticTimer.start();
+		}
+		
+		private function onInit(e:Event) : void {
 			createPlayer();
 			ticTimer.addEventListener(TimerEvent.TIMER, onTic);
-			_lastTic = getTimer();
 			
 			loadObjectArrays();
 			
 			initializeGuards();
 			initializePlayer();
-			ticTimer.start();
 		}
 		
-		protected function onTic(e:Event) {
+		protected function onTic(e:Event) :  void {
 			var sinceLastTic:int = getTimer() - _lastTic;
 			_lastTic = getTimer();
 			
@@ -47,7 +55,7 @@
 				ITimeAware(object).tic(sinceLastTic);
 		}
 		
-		private function createPlayer() {
+		private function createPlayer() : void {
 			this._player = new Player();
 			this.addChild(this._player);
 			this._player.x = 30;
@@ -60,6 +68,9 @@
 				
 				if(object is ITimeAware)
 					timeAware.push(object);
+					
+				if(object is ISecurityObject)
+					securityObjects.push(object);
 					
 				if(object is Waypoint)
 					addWaypoint(Waypoint(object));

@@ -40,6 +40,7 @@
 				
 			currentLevel = LevelFactory.createLevel(level);
 			addChild(currentLevel);
+			currentLevel.resume();
 		}
 		
 		private function onKeyPress(e:KeyboardEvent){
