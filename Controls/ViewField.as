@@ -19,6 +19,9 @@
 		private var _numberOfSegments:int = 4;
 		private var _segmentResolution:Number = Math.PI / 100;
 		
+		private var _detectionRadius = 100;
+		private var _suspectRadius = 100;
+		
 		private var _timer = new Timer(75);
 		
 		private var _currentSegments = new Array();
@@ -37,12 +40,20 @@
 			this._obstacles = newValue;
 		}
 		
-		public function get radius() : int {
-			return this._radius;
+		public function get detectionRadius() : int {
+			return this._detectionRadius;
 		}
 		
-		public function set radius(newValue:int) : void {
-			this._radius = newValue;
+		public function set detectionRadius(newValue:int) : void {
+			this._detectionRadius = newValue;
+		}
+		
+		public function get suspectRadius() : int {
+			return this._suspectRadius;
+		}
+		
+		public function set suspectRadius(newValue:int) : void {
+			this._suspectRadius = newValue;
 		}
 		
 		private function onRedraw(e:Event){
