@@ -4,18 +4,21 @@
 	import flash.display.*;
 	import fl.controls.*;
 	import Sounds.*;
+	import System.*;
 	
 	public class LevelSelectView extends ViewBase {
 		
 		private var selectedLevel:int = 0;
+		private var scoreManager:ScoreManager;
 
 		public function LevelSelectView() {
 			addEventListener(Event.ADDED_TO_STAGE, init);
+			scoreManager = new ScoreManager();
 		}
 	
 		public function init(evt:Event) : void {
 			startGameButton.addEventListener(MouseEvent.CLICK, startGame);
-			
+			selectLevel(1);
 			for(var i:int = 0; i < numChildren; i++) {
 			    var child:DisplayObject = getChildAt(i);
 				
@@ -44,6 +47,9 @@
 			selectedLevel = levelId;
 			levelIdLabel.text = String(levelId);
 			levelPreview.levelId = levelId;
+			
+			scoreManager.setSelectedLevelScore(levelId);
+			levelScoreLabel.text = String(scoreManager.getSelectedLevelScore());
 		}
 	}
 }
