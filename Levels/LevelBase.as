@@ -16,6 +16,7 @@
 		private var guards:Array = new Array();
 		private var waypoints:Array = new Array();
 		private var securityObjects:Array = new Array();
+		private var objectives:Array = new Array();
 				
 		private var _obstacleTester:ObstacleTester = null;
 		private var _graphCoordinates:GraphCoordinates = new GraphCoordinates(15);
@@ -78,6 +79,12 @@
 					
 				if(object is ISecurityObject)
 					securityObjects.push(object);
+					
+				if(object is IPlayerAware)
+					IPlayerAware(object).setPlayer(this._player);
+					
+				if(object is IObjective)
+					objectives.push(object);
 					
 				if(object is Waypoint)
 					addWaypoint(Waypoint(object));
