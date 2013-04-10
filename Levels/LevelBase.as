@@ -23,6 +23,7 @@
 		private var ticTimer:Timer = new Timer(Configuration.LEVEL_TIC_INTERVAL);
 		private var _lastTic:int = 0;
 		private var _player:Player;
+		private var _detector:Detector = null;
 		
 		public function LevelBase() {
 			this.addEventListener(Event.ADDED_TO_STAGE, onInit);
@@ -53,6 +54,9 @@
 			
 			for each(var object in timeAware)
 				ITimeAware(object).tic(sinceLastTic);
+				
+			if(_detector.detect().length > 0)
+				trace("detected");
 		}
 		
 		private function createPlayer() : void {
@@ -82,6 +86,7 @@
 			
 			_obstacleTester = new ObstacleTester(this.obstacles, this);
 			buildGraph();
+			_detector = new Detector(this.securityObjects, this._player);
 		}
 		
 		private function addGuard(guard:Guard) {

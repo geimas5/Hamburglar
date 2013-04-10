@@ -16,7 +16,6 @@
 		private var isPaused:Boolean = false;
 		
 		public function GameView(level:int) {
-			pauseMenu = new PauseMenu();
 			setLevel(level);
 			addEventListener(Event.ADDED_TO_STAGE, onInit);
 		}
@@ -29,6 +28,7 @@
 		
 		private function onInit(e:Event) {
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
+			pauseMenu = new PauseMenu(getViewManager(), this);
 			pauseMenu.x = (width / 2) - (pauseMenu.width / 2);
 			pauseMenu.y = (height / 2) - (pauseMenu.height / 2);
 		}
@@ -49,8 +49,16 @@
 			
 			if(!isPaused)
 				addChild(pauseMenu);
-			
-			isPaused = true;
+			else
+				removeChild(pauseMenu)
+			isPaused = !isPaused;
+			currentLevel.pause();
+		}
+		
+		public function resume() : void {
+			removeChild(pauseMenu);
+			isPaused = !isPaused;
+			currentLevel.resume();
 		}
 	}
 }
