@@ -1,8 +1,8 @@
 ﻿package Views {
 	import flash.events.*;
-	import Controls.*;
 	import flash.display.*;
 	import fl.controls.*;
+	import Controls.*;
 	import Sounds.*;
 	import System.*;
 	

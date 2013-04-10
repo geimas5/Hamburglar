@@ -25,7 +25,6 @@
 		private var ticTimer:Timer = new Timer(Configuration.LEVEL_TIC_INTERVAL);
 		private var _lastTic:int = 0;
 		private var _player:Player;
-		private var _detector:Detector = null;
 		
 		private var _gameOverCallback:Function = null;
 		
@@ -96,7 +95,6 @@
 			
 			_obstacleTester = new ObstacleTester(this.obstacles, this);
 			buildGraph();
-			_detector = new Detector(this.securityObjects, this._player);
 		}
 		
 		private function addGuard(guard:Guard) {
@@ -136,16 +134,15 @@
 		}
 		
 		private function detectPlayer() {
-			var detections:Array = _detector.detect();
-			
-			for each(var detection:DetectionResult in detections) {
-				if(detection.isSuspicion) continue;
-				
-				this._gameOverCallback();
-				pause();
-				
-				return;
+			for each(var object:ISecurityObject in this.securityObjects){
+				if(object.isDeteced()) {					
+					this._gameOverCallback();
+					pause();
+					return true;
+				}
 			}
+			
+			return false;
 		}
 	}
 }

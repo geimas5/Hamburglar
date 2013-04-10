@@ -7,13 +7,16 @@
 	import flash.events.*;
 	import Controls.*;
 	import Pathfinding.*;
+	import System.DetectionResult;
 	
-	public class Guard extends UIComponent implements ITimeAware, ISecurityObject {
+	public class Guard extends UIComponent implements ITimeAware, ISecurityObject, IPlayerAware {
 		
 		private var _obstacles:Array;
 		private var _waypoints:Array;
 		private var walkingSpeed:Number = 4;
 		private var currentWaypoint:Number = -1;
+		
+		private var _player:Player = null;
 		
 		private var _id:Number = 0;
 		
@@ -129,8 +132,16 @@
 			this.rotation = deg;
 		}
 		
-		public function getViewField() : ViewField {
-			return this.viewField;
+		public function isDeteced() : Boolean {
+			var result:DetectionResult = viewField.detectPlayer(this._player);
+			
+			if(result == null) return false;
+			
+			return !result.isSuspicion;
+		}
+		
+		public function setPlayer(player:Player) : void {
+			this._player = player;
 		}
 		
 		private function getDistance(p1x:Number, p1y:Number, p2x:Number, p2y:Number) : Number {

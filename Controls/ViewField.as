@@ -4,7 +4,8 @@
 	import flash.geom.*;
 	import flash.utils.*;
 	import fl.motion.easing.*;
-	import System.HitTestHelper;
+	import System.*;
+	import GameObjects.Player;
 	
 	public class ViewField extends MovieClip {
 		
@@ -52,6 +53,23 @@
 		public function tic() {
 			if(hasMoved())			
 				drawViewField();
+		}
+		
+		public function detectPlayer(player:Player) : DetectionResult {						
+			if(!HitTestHelper.isHit(player.root, player, this)) return null;
+			
+			var playerBounds:Rectangle = player.getBounds(DisplayObject(player).root);
+			
+			var distanceToPlayer:Number = MathHelper.distance(parent.x, parent.y, playerBounds.x + (playerBounds.width / 2), playerBounds.y + (playerBounds.height / 2));
+			trace(distanceToPlayer);
+			
+			if(distanceToPlayer < this.detectionRadius)
+				return new DetectionResult(null, false);
+			
+			if(distanceToPlayer < this.suspectRadius)
+				return new DetectionResult(null, true);
+				
+			return null;
 		}
 		
 		private function hasMoved(){
