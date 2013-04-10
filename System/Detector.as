@@ -31,14 +31,13 @@
 		private function doDetection(object:ISecurityObject) : DetectionResult {
 			var viewField:ViewField = object.getViewField();
 			
+			var securityObject:DisplayObject = DisplayObject(object);
+			
 			if(!HitTestHelper.isHit(player.root, player, viewField)) return null;
 			
-			var viewFieldBounds:Rectangle = viewField.getBounds(DisplayObject(object).root);
 			var playerBounds:Rectangle = player.getBounds(DisplayObject(player).root);
 			
-			
-			var distanceToPlayer:Number = distance(viewFieldBounds.x, viewFieldBounds.y, playerBounds.x, playerBounds.y);
-			trace("detectionRadius: ", viewField.detectionRadius, "suspectRadius: ", viewField.suspectRadius, "distance: ", distanceToPlayer);
+			var distanceToPlayer:Number = distance(securityObject.x, securityObject.y, playerBounds.x + (playerBounds.width / 2), playerBounds.y + (playerBounds.height / 2));
 			
 			if(distanceToPlayer < viewField.detectionRadius)
 				return new DetectionResult(object, false);

@@ -16,7 +16,7 @@
 		private var _radius:Number = 100;
 		private var _viewAngle:Number = Math.PI / 3 ;
 		private var _curveAngle:Number = Math.PI / 180;
-		private var _rotationOffset:Number = Math.PI / 2;		
+		private var _rotationOffset:Number = Math.PI / 2;
 		private var _numberOfSegments:int = 4;
 		private var _segmentResolution:Number = Math.PI / 100;
 		

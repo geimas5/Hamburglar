@@ -30,7 +30,7 @@
 		
 		private function onInit(e:Event) {
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
-			gameOverDialog = new GameOverDialog(this);
+			gameOverDialog = new GameOverDialog(this, levelId, getViewManager());
 			pauseMenu = new PauseMenu(getViewManager(), this);
 			pauseMenu.x = (width / 2) - (pauseMenu.width / 2);
 			pauseMenu.y = (height / 2) - (pauseMenu.height / 2);
