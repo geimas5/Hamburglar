@@ -8,22 +8,23 @@
 		private var playerManager:PlayerManager;
 		public static var urlPath:String = "http://frigg.hiof.no/spillprg_v134/rc/php/";
 		private var urlloader:URLLoader;
-		private var levelSelectView:LevelSelectView;
+		private var callBackSelectLevel:Function;
 		
-		public function ScoreManager(levelSelectView:LevelSelectView){
-			this.levelSelectView = levelSelectView;
+		public function ScoreManager(){
 			playerManager = new PlayerManager();
 			urlloader = new URLLoader();
 		}
 		
-		public function getLevelScore(level): void{
+		public function getLevelScore(level,callBackSelectLevel:Function): void{
+			this.callBackSelectLevel = callBackSelectLevel;
 			var url:String = urlPath+"getScores.php?view=level&level="+level+"&id="+ playerManager.getPlayerId()+"&rand="+Math.random();
 			urlloader.load(new URLRequest(url));
 			urlloader.addEventListener(Event.COMPLETE,levelScoreReceived);
 		}
 		
 		private function levelScoreReceived(e:Event){
-			levelSelectView.updateLevelScoreLabel(urlloader.data);
+			callBackSelectLevel(urlloader.data);
+			callBackSelectLevel = null;
 		}
 		
 		public function submitLevelScore(levelId:int,time:int,score:int){

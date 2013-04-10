@@ -13,7 +13,7 @@
 
 		public function LevelSelectView() {
 			addEventListener(Event.ADDED_TO_STAGE, init);
-			scoreManager = new ScoreManager(this);
+			scoreManager = new ScoreManager();
 			updateLevelScoreLabel("0");
 		}
 	
@@ -52,6 +52,7 @@
 			selectedLevel = levelId;
 			levelIdLabel.text = String(levelId);
 			levelPreview.levelId = levelId;
+			scoreManager.getLevelScore(levelId,updateLevelScoreLabel);
 		}
 	}
 }
