@@ -3,10 +3,11 @@
 	import flash.events.*;
 
 	public class PlayerManager {
-		public static var urlPath:String = "http://frigg.hiof.no/spillprg_v134/p2/php/";
+		public static var urlPath:String = "http://frigg.hiof.no/spillprg_v134/rc/php/";
 		private var urlloader:URLLoader;
 		private var playerId:int;
 		private var sharedObject:SharedObject;
+		private var getPlayerNameCallBack:Function = null;
 		
 		public function PlayerManager(){
 			urlloader = new URLLoader();
@@ -17,6 +18,25 @@
 			else{
 				registerNewPlayer();
 			}
+		}
+		
+		public function setPlayerName(playerName:String) : void{
+			var url:String = urlPath+"player.php?action=setName&id="+playerId+"&name="+playerName+"&rand="+Math.random();
+			urlloader.load(new URLRequest(url));
+			urlloader.addEventListener(Event.COMPLETE,playerNameRegistered);
+		}
+		
+		private function playerNameFound(e:Event){
+			getPlayerNameCallBack(urlloader.data);
+			getPlayerNameCallBack = null;
+		}
+		
+		public function getPlayerName(getPlayerNameCallBack:Function) : void{
+			this.getPlayerNameCallBack = getPlayerNameCallBack;
+
+			var url:String = urlPath+"player.php?action=getName&id="+playerId+"&rand="+Math.random();
+			urlloader.load(new URLRequest(url));
+			urlloader.addEventListener(Event.COMPLETE,playerNameFound);
 		}
 		
 		private function isRegistered():Boolean{
@@ -32,14 +52,8 @@
 			urlloader.addEventListener(Event.COMPLETE,newPlayerRegistered);
 		}
 		
-		public function registerPlayerName(name:String){
-			var url:String = urlPath+"player.php?action=setName&id="+playerId+"&name="+name+"&rand="+Math.random();
-			urlloader.load(new URLRequest(url));
-			urlloader.addEventListener(Event.COMPLETE,playerNameRegistered);
-		}
-		
 		private function playerNameRegistered(e:Event){
-			trace("name changed");
+			//trace("name changed");
 		}
 		
 		private function newPlayerRegistered(e:Event){

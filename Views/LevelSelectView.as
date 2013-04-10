@@ -13,7 +13,8 @@
 
 		public function LevelSelectView() {
 			addEventListener(Event.ADDED_TO_STAGE, init);
-			scoreManager = new ScoreManager();
+			scoreManager = new ScoreManager(this);
+			updateLevelScoreLabel("0");
 		}
 	
 		public function init(evt:Event) : void {
@@ -26,6 +27,10 @@
 					child.addEventListener(MouseEvent.CLICK, onSelectLevel);
 				}
 			}
+		}
+		
+		public function updateLevelScoreLabel(score:String) : void{
+			levelScoreLabel.text = score;
 		}
 		
 		override public function getBackgroundMusic() : Array {
@@ -47,9 +52,6 @@
 			selectedLevel = levelId;
 			levelIdLabel.text = String(levelId);
 			levelPreview.levelId = levelId;
-			
-			scoreManager.setSelectedLevelScore(levelId);
-			levelScoreLabel.text = String(scoreManager.getSelectedLevelScore());
 		}
 	}
 }
