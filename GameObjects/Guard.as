@@ -114,6 +114,8 @@
 				remainingMovement = 0;
 			}
 			
+			this.viewField.tic();
+			
 			if(this.activeWalkingCheckpoint == null)
 				this.nextWaypoint();
 		}

@@ -4,6 +4,7 @@
 	import flash.geom.*;
 	import flash.utils.*;
 	import fl.motion.easing.*;
+	import System.HitTestHelper;
 	
 	public class ViewField extends MovieClip {
 		
@@ -22,15 +23,7 @@
 		private var _detectionRadius = 100;
 		private var _suspectRadius = 100;
 		
-		private var _timer = new Timer(75);
-		
 		private var _currentSegments = new Array();
-		
-		public function ViewField() {
-			_timer.start();
-			
-			this.addEventListener(Event.ENTER_FRAME, onRedraw);
-		}
 		
 		public function get obstacles() : Array {
 			return this._obstacles;
@@ -56,7 +49,7 @@
 			this._suspectRadius = newValue;
 		}
 		
-		private function onRedraw(e:Event){
+		public function tic() {
 			if(hasMoved())			
 				drawViewField();
 		}
@@ -171,44 +164,11 @@
 		private function isHit(triangle:Shape) :Boolean {
 			for each(var obstacle:MovieClip in this._obstacles) {
 				
-				if(isHitHelper(triangle, obstacle))
+				if(HitTestHelper.isHit(root, triangle, obstacle))
 					return true;
 			}
 			
 			return false;
 		}
-		
-	
-		// Based on http://www.freeactionscript.com/tag/pixel-perfect-hit-test-with-rotation/
-		function isHitHelper(object1:DisplayObject, object2:DisplayObject, tolerance:int = 255):Boolean {			
-			if (!object1.hitTestObject(object2))
-				return false;
-			
-			var limits1:Rectangle = object1.getBounds(root);
-			var limits2:Rectangle = object2.getBounds(root);
-			var limits:Rectangle = limits1.intersection(limits2);
-			
-			limits.x = Math.floor(limits.x);
-			limits.y = Math.floor(limits.y);
-			
-			limits.width = Math.ceil(limits.width);
-			limits.height = Math.ceil(limits.height);
-			
-			if (limits.width < 1 || limits.height < 1) return false;
-	
-			var image:BitmapData = new BitmapData(limits.width, limits.height, false);
-			
-			var matrix:Matrix = object1.transform.concatenatedMatrix;
-			matrix.translate(-limits.left, -limits.top);
-			image.draw(object1, matrix, new ColorTransform(1, 1, 1, 1, 255, -255, -255, tolerance));
-			matrix = object2.transform.concatenatedMatrix;
-			matrix.translate(-limits.left, -limits.top);
-			image.draw(object2, matrix, new ColorTransform(1, 1, 1, 1, 255, 255, 255, tolerance), BlendMode.DIFFERENCE);
-	
-			var intersection:Rectangle = image.getColorBoundsRect(0xFFFFFFFF, 0xFF00FFFF);
-			if (intersection.width == 0) return false;
-			
-			return true;
-		}	
 	}
 }

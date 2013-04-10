@@ -7,6 +7,7 @@
 	import System.*;
 	import flash.events.*;
 	import flash.utils.*;
+	import fl.controls.BaseButton;
 	
 	public class LevelBase extends MovieClip {
 		private var obstacles:Array = new Array();
@@ -25,7 +26,10 @@
 		private var _player:Player;
 		private var _detector:Detector = null;
 		
-		public function LevelBase() {
+		private var _gameOverCallback:Function = null;
+		
+		public function LevelBase(gameOverCallback:Function) {
+			_gameOverCallback = gameOverCallback;
 			this.addEventListener(Event.ADDED_TO_STAGE, onInit);
 		}
 		
@@ -55,8 +59,7 @@
 			for each(var object in timeAware)
 				ITimeAware(object).tic(sinceLastTic);
 				
-			if(_detector.detect().length > 0)
-				trace("detected");
+			detectPlayer();
 		}
 		
 		private function createPlayer() : void {
@@ -123,6 +126,19 @@
 		
 		private function initializePlayer() {
 			 _player.obstacleTester = _obstacleTester;
+		}
+		
+		private function detectPlayer() {
+			var detections:Array = _detector.detect();
+			
+			for each(var detection:DetectionResult in detections) {
+				if(detection.isSuspicion) continue;
+				
+				this._gameOverCallback();
+				pause();
+				
+				return;
+			}
 		}
 	}
 }

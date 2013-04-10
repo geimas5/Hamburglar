@@ -28,7 +28,7 @@
 			if(_currentPreview != null)
 				removeChild(_currentPreview);
 			
-			_currentPreview = LevelFactory.createLevel(this.levelId);
+			_currentPreview = LevelFactory.createLevel(this.levelId, null);
 			
 			_currentPreview.scaleY =  (this.height / 2) / _currentPreview.height;
 			_currentPreview.scaleX = _currentPreview.scaleY;
