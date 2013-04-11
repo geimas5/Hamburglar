@@ -16,8 +16,10 @@
 		}
 		
 		public function tic(sinceLastTic:int) : void{
-			if(player.hitTestObject(this))
+			if(!objectiveComplete && player.hitTestObject(this))	{
 				objectiveComplete = true;
+				parent.removeChild(this);
+			}
 		}
 		
 		public function isCompleted() : Boolean{

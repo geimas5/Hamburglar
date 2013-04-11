@@ -7,6 +7,10 @@
 		private var player:Player;
 		private var avalable:Boolean = false;
 		
+		public function Elevator(){
+			stop();
+		}
+		
 		public function setPlayer(player:Player) : void {
 			this.player = player;
 		}

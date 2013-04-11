@@ -84,5 +84,9 @@
 		private function gameOver() {
 			gameOverDialog.show();
 		}
+		
+		private function levelFinished(){
+			getViewManager().showLevelFinished(0);
+		}
 	}
 }

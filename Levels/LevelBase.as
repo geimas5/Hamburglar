@@ -17,6 +17,7 @@
 		private var waypoints:Array = new Array();
 		private var securityObjects:Array = new Array();
 		private var objectives:Array = new Array();
+		private var cameras:Array = new Array();
 		private var elevator:Elevator = null;
 		
 		private var _lapseTime:int = 0;
@@ -66,6 +67,7 @@
 			loadObjectArrays();
 			
 			initializeGuards();
+			initializeCameras();
 			initializePlayer();
 		}
 		
@@ -114,6 +116,8 @@
 					obstacles.push(object);
 				else if (object is Elevator)
 					elevator = Elevator(object);
+				else if(object is Camera)
+					cameras.push(object);
 			}
 			
 			_obstacleTester = new ObstacleTester(this.obstacles, this);
@@ -149,6 +153,12 @@
 				
 				if(Number(i) in this.waypoints)
 					guard.waypoints = this.waypoints[Number(i)];
+			}
+		}
+		
+		private function initializeCameras(){
+			for each(var camera:Camera in this.cameras) {
+				 camera.obstacleTester = this._obstacleTester;
 			}
 		}
 		
