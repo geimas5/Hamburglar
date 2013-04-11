@@ -1,9 +1,9 @@
 ﻿package Views {
 	
 	import flash.display.*;
-	import flash.events.KeyboardEvent;
-	import flash.ui.Keyboard;
-	import flash.events.Event;
+	import flash.ui.*;
+	import flash.events.*;
+	import flash.utils.*;
 	import Levels.*;
 	import Sounds.*;
 	import Dialogs.*;
@@ -16,6 +16,7 @@
 		private var pauseMenu:PauseMenu;
 		private var gameOverDialog:GameOverDialog;
 		private var isPaused:Boolean = false;
+		private var _ticTimer:Timer = new Timer(Configuration.GAME_TIC_INTERVAL);
 		
 		public function GameView(level:int) {
 			setLevel(level);
@@ -34,6 +35,22 @@
 			pauseMenu = new PauseMenu(getViewManager(), this);
 			pauseMenu.x = (width / 2) - (pauseMenu.width / 2);
 			pauseMenu.y = (height / 2) - (pauseMenu.height / 2);
+			_ticTimer.addEventListener(TimerEvent.TIMER, onTic);
+			_ticTimer.start();
+		}
+		
+		private function onTic(e:Event) : void{
+			var time:int = currentLevel.getLapseTime()/1000;
+			var sec:int = time % 60;
+			var min:int = (time - sec)/60;
+			clock.text = twoDigit(min) + ":" + twoDigit(sec);
+		}
+		
+		private function twoDigit(digits:int){
+			var digit:String = String(digits);
+			if(digit.length > 1)return digit;
+			return "0" + digit;
+
 		}
 		
 		private function setLevel(level:int) {

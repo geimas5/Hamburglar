@@ -17,6 +17,8 @@
 		private var waypoints:Array = new Array();
 		private var securityObjects:Array = new Array();
 		private var objectives:Array = new Array();
+		
+		private var _lapseTime:int = 0;
 				
 		private var _obstacleTester:ObstacleTester = null;
 		private var _graphCoordinates:GraphCoordinates = new GraphCoordinates(15);
@@ -42,6 +44,10 @@
 			this.ticTimer.start();
 		}
 		
+		public function getLapseTime() : int{
+			return _lapseTime;
+		}
+		
 		private function onInit(e:Event) : void {
 			createPlayer();
 			ticTimer.addEventListener(TimerEvent.TIMER, onTic);
@@ -54,6 +60,7 @@
 		
 		protected function onTic(e:Event) :  void {
 			var sinceLastTic:int = getTimer() - _lastTic;
+			_lapseTime += sinceLastTic;
 			_lastTic = getTimer();
 			
 			for each(var object in timeAware)
