@@ -44,6 +44,14 @@
 			this._detectionRadius = newValue;
 		}
 		
+		public function get viewAngle() : Number {
+			return this._viewAngle;
+		}
+		
+		public function set viewAngle(newValue:Number) : void {
+			this._viewAngle = newValue;
+		}
+		
 		public function get suspectRadius() : int {
 			return this._suspectRadius;
 		}

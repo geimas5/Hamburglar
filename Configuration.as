@@ -10,6 +10,8 @@
 		
 		public static const CAMERA_DETECTION_RADIUS:Number = 100;
 		public static const CAMERA_SUSPECT_RADIUS:Number = 100;
+		public static const CAMERA_VIEW_ANGLE:Number = Math.PI / 4;
+		
 		
 		public static const GUARD_DETECTION_RADIUS:Number = 70; // in points
 		public static const GUARD_SUSPECT_RADIUS:Number = 100; // in points

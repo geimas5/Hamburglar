@@ -21,6 +21,7 @@
 		public function Camera(){
 			viewField.detectionRadius = Configuration.CAMERA_DETECTION_RADIUS;
 			viewField.suspectRadius = Configuration.CAMERA_SUSPECT_RADIUS;
+			viewField.viewAngle = Configuration.CAMERA_VIEW_ANGLE;
 		}
 		
 		public function set obstacleTester(obstacleTester:ObstacleTester) : void {

@@ -30,14 +30,22 @@
 			
 			var distance = calculateDistance(sinceLastTic);
 			
-			if(_keyboardMonitor.getKeyState(Keyboard.UP))
+			if(_keyboardMonitor.getKeyState(Keyboard.UP)) {
 				y -= distance;
-			if(_keyboardMonitor.getKeyState(Keyboard.DOWN))
+				this.rotation = 0;
+			}
+			if(_keyboardMonitor.getKeyState(Keyboard.DOWN)) {
 				y += distance;
-			if(_keyboardMonitor.getKeyState(Keyboard.LEFT))
+				this.rotation = 180;
+			}
+			if(_keyboardMonitor.getKeyState(Keyboard.LEFT)) {
 				x -= distance;
-			if(_keyboardMonitor.getKeyState(Keyboard.RIGHT))
+				this.rotation = 270;
+			}
+			if(_keyboardMonitor.getKeyState(Keyboard.RIGHT)) {
 				x += distance;
+				this.rotation = 90;
+			}
 				
 			if(this._obstacleTester != null && this._obstacleTester.hitTest(this)){
 				y = oldY;
