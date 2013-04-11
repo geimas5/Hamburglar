@@ -26,12 +26,14 @@
 		
 		private var _currentSegments = new Array();
 		
-		public function get obstacles() : Array {
-			return this._obstacles;
+		private var _obstacleTester:ObstacleTester = null;
+		
+		public function get obstacleTester() : ObstacleTester {
+			return this._obstacleTester;
 		}
 		
-		public function set obstacles(newValue:Array) : void {
-			this._obstacles = newValue;
+		public function set obstacleTester(newValue:ObstacleTester) : void {
+			this._obstacleTester = newValue;
 		}
 		
 		public function get detectionRadius() : int {
@@ -120,18 +122,14 @@
 			
 		    var highestPoint:Number = this._radius;
 			
-			for each(var obstacle:MovieClip in this._obstacles) {				
-				var rect:Rectangle = obstacle.getBounds(this);
+			var xSpeed:Number = endPoint.x / _radius;
+			var ySpeed:Number = endPoint.y / _radius;
+			
+			for(var i:Number = _radius; i > 0 ; i-= 1) {
+				var testPoint:Point = this.localToGlobal(new Point(i * xSpeed, i * ySpeed));
 				
-				var xSpeed:Number = endPoint.x / _radius;
-				var ySpeed:Number = endPoint.y / _radius;
-				
-				for(var i:Number = _radius; i > 0 ; i-= 1) {
-					var testPoint:Point = this.localToGlobal(new Point(i * xSpeed, i * ySpeed));
-					
-					if(obstacle.hitTestPoint(testPoint.x, testPoint.y, true) && i < highestPoint)
-						highestPoint = i - 1;
-				}
+				if(this.obstacleTester.hitTestCoord(testPoint.x, testPoint.y))
+					highestPoint = i - 1;
 			}
 			
 			return createViewFieldTriangle(angle, angle + _segmentResolution, highestPoint);
@@ -179,14 +177,8 @@
 			return (Math.sin(angle + _rotationOffset) * radius) * -1;
 		}
 		
-		private function isHit(triangle:Shape) :Boolean {
-			for each(var obstacle:MovieClip in this._obstacles) {
-				
-				if(HitTestHelper.isHit(root, triangle, obstacle))
-					return true;
-			}
-			
-			return false;
+		private function isHit(triangle:Shape) : Boolean {
+			return this._obstacleTester.hitTest(triangle);
 		}
 	}
 }

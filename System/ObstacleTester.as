@@ -20,18 +20,18 @@
 			this.generateBitmapData();
 		}
 		
-		public function hitTestPoint(point:Point) {
+		public function hitTestPoint(point:Point) : Boolean {
 			return hitTestCoord(point.x, point.y);
 		}
 		
-		public function hitTestCoord(x:Number, y:Number) {
+		public function hitTestCoord(x:Number, y:Number) : Boolean {
 			if(cachedBitmap.getPixel(x, y) < 0xFFFFFF)
 				return true;
 			
 			return false;
 		}
 		
-		public function hitTest(object:DisplayObject) {
+		public function hitTest(object:DisplayObject) : Boolean {
 			if(!bounds.containsRect(object.getBounds(this.level)))
 				return true;
 			

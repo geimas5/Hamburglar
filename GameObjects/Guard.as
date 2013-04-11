@@ -15,7 +15,7 @@
 		
 		private var _currentState:String = Guard.NORMAL_STATE;
 		
-		private var _obstacles:Array;
+		private var _obstacleTester:ObstacleTester = null;
 		private var _waypoints:Array;
 		private var currentWaypoint:Number = -1;
 		
@@ -45,13 +45,13 @@
 			this._id = id;
 		}
 		
-		public function get obstacles() : Array {
-			return this._obstacles;
+		public function get obstacleTester() : ObstacleTester {
+			return this._obstacleTester;
 		}
 		
-		public function set obstacles(arr:Array) : void {
-			this._obstacles = arr;
-			this.viewField.obstacles = arr;
+		public function set obstacleTester(tester:ObstacleTester) : void {
+			this._obstacleTester = tester;
+			this.viewField.obstacleTester = tester;
 		}
 		
 		public function get waypoints() : Array {
@@ -112,7 +112,7 @@
 					this._reactionTimeLeft = Configuration.GUARD_REACTION_TIME;
 					this.walkTo(new Point(this._player.x, this._player.y));
 					this.rotateToPoint(new Point(this._player.x, this._player.y));
-					
+					SoundEffects.GuardSuspect();
 				}
 				else if(this.activeWalkingCheckpoint == null)
 					this.nextWaypoint();

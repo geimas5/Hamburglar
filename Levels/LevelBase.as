@@ -17,6 +17,7 @@
 		private var waypoints:Array = new Array();
 		private var securityObjects:Array = new Array();
 		private var objectives:Array = new Array();
+		private var elevator:Elevator = null;
 		
 		private var _lapseTime:int = 0;
 				
@@ -44,6 +45,16 @@
 			this.ticTimer.start();
 		}
 		
+		private function isObjectivesCompleted() : Boolean {
+			for each(var objective:IObjective in objectives) {
+				if(!objective.isCompleted())
+					return false;
+			}
+			
+			elevator.setAvalable();
+			return true;
+		}
+		
 		public function getLapseTime() : int{
 			return _lapseTime;
 		}
@@ -66,7 +77,10 @@
 			for each(var object in timeAware)
 				ITimeAware(object).tic(sinceLastTic);
 				
+			isObjectivesCompleted();
+				
 			detectPlayer();
+			finishedLevel();
 		}
 		
 		private function createPlayer() : void {
@@ -98,6 +112,8 @@
 					addGuard(Guard(object));
 				else if(object is Obstacle)
 					obstacles.push(object);
+				else if (object is Elevator)
+					elevator = Elevator(object);
 			}
 			
 			_obstacleTester = new ObstacleTester(this.obstacles, this);
@@ -129,7 +145,7 @@
 				guard.graph = this._graph;
 				guard.graphCoordinates = this._graphCoordinates;
 				
-				guard.obstacles = this.obstacles;
+				guard.obstacleTester = this._obstacleTester;
 				
 				if(Number(i) in this.waypoints)
 					guard.waypoints = this.waypoints[Number(i)];
@@ -142,7 +158,8 @@
 		
 		private function detectPlayer() {
 			for each(var object:ISecurityObject in this.securityObjects){
-				if(object.isDeteced()) {					
+				if(object.isDeteced()) {
+					SoundEffects.GameOver();
 					this._gameOverCallback();
 					pause();
 					return true;
@@ -150,6 +167,14 @@
 			}
 			
 			return false;
+		}
+		
+		private function finishedLevel() {
+			if(elevator.isAvalable() && elevator.hitTestObject(_player)) {
+				this._gameOverCallback();
+				pause();
+				return true;
+			}
 		}
 	}
 }
