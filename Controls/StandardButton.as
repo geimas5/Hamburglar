@@ -7,6 +7,11 @@
 		private var _text:String;
 		private var layout:StandardButtonDesign;
 		
+		public function StandardButton(){
+			this.buttonMode = true;
+			this.mouseChildren = false;
+		}
+		
 		[Inspectable(DefaultValue=0)]
 		public function get text() : String {
 			return this._text;

@@ -7,13 +7,16 @@
 	import flash.events.*;
 	import Controls.*;
 	import Pathfinding.*;
-	import System.DetectionResult;
+	import System.*;
 	
 	public class Guard extends UIComponent implements ITimeAware, ISecurityObject, IPlayerAware {
+		private static var NORMAL_STATE:String = "NORMAL_STATE";
+		private static var SUSPICTION_STATE:String = "SUSPICTION_STATE";
+		
+		private var _currentState:String = Guard.NORMAL_STATE;
 		
 		private var _obstacles:Array;
 		private var _waypoints:Array;
-		private var walkingSpeed:Number = 4;
 		private var currentWaypoint:Number = -1;
 		
 		private var _player:Player = null;
@@ -25,6 +28,8 @@
 		
 		private var _graphCoordinates:GraphCoordinates = null;
 		private var _graph:IGraph = null;
+		
+		private var _reactionTimeLeft:int =0;
 		
 		public function Guard() {
 			viewField.detectionRadius = Configuration.GUARD_DETECTION_RADIUS;
@@ -55,7 +60,6 @@
 		
 		public function set waypoints(arr:Array) : void {
 			this._waypoints = arr;
-			this.nextWaypoint();
 		}
 		
 		public function get graph() : IGraph {
@@ -94,33 +98,27 @@
 		}
 		
 		public function tic(sinceLastTic:int) : void {
-			var remainingMovement:Number = walkingSpeed;
+			walk(sinceLastTic);
 			
-			while(activeWalkingCheckpoint != null && remainingMovement > 0){
-				var distanceToPoint = this.getDistance(x, y, this.activeWalkingCheckpoint.x, this.activeWalkingCheckpoint.y);
-				
-				this.rotateToPoint(this.activeWalkingCheckpoint);
-				
-				if(distanceToPoint <= remainingMovement) {
-					x = this.activeWalkingCheckpoint.x;
-					y = this.activeWalkingCheckpoint.y;
-					remainingMovement -= distanceToPoint;
-					this.activeWalkingCheckpoint = this.currentWalkingCheckpoints.pop();
-					continue;
+			if(this._currentState == Guard.SUSPICTION_STATE) {
+				if (this.activeWalkingCheckpoint == null) {
+					this.walkToCurrentWaypoint();
+					this._currentState = Guard.NORMAL_STATE;
 				}
-				
-				var speedX = (this.activeWalkingCheckpoint.x - x) / distanceToPoint;
-				var speedY = (this.activeWalkingCheckpoint.y - y) / distanceToPoint;
-				
-				x += speedX * remainingMovement;
-				y += speedY * remainingMovement;
-				remainingMovement = 0;
+			}
+			else if(this._currentState == Guard.NORMAL_STATE) {
+				if(isSuspected()) {
+					this._currentState = Guard.SUSPICTION_STATE;
+					this._reactionTimeLeft = Configuration.GUARD_REACTION_TIME;
+					this.walkTo(new Point(this._player.x, this._player.y));
+					this.rotateToPoint(new Point(this._player.x, this._player.y));
+					
+				}
+				else if(this.activeWalkingCheckpoint == null)
+					this.nextWaypoint();
 			}
 			
 			this.viewField.tic();
-			
-			if(this.activeWalkingCheckpoint == null)
-				this.nextWaypoint();
 		}
 		
 		public function rotateToPoint(p:Point) : void {
@@ -140,12 +138,73 @@
 			return !result.isSuspicion;
 		}
 		
+		public function isSuspected() : Boolean {
+			var result:DetectionResult = viewField.detectPlayer(this._player);
+			
+			if(result == null) return false;
+			
+			return result.isSuspicion;
+		}
+		
 		public function setPlayer(player:Player) : void {
 			this._player = player;
 		}
 		
-		private function getDistance(p1x:Number, p1y:Number, p2x:Number, p2y:Number) : Number {
-			return Math.sqrt(Math.pow((p1x - p2x), 2) + Math.pow((p1y - p2y), 2));
+		private function walk(sinceLastTic:int) : void {
+			if(this._reactionTimeLeft > 0) {
+				this._reactionTimeLeft -= sinceLastTic;
+				return;
+			}
+			
+			var remainingMovement:Number = (Configuration.GUARD_WALKING_SPEED / 1000) * sinceLastTic;
+			
+			while(activeWalkingCheckpoint != null && remainingMovement > 0) {
+				var distanceToPoint = MathHelper.distance(x, y, this.activeWalkingCheckpoint.x, this.activeWalkingCheckpoint.y);
+				
+				rotate(sinceLastTic);
+				
+				if(distanceToPoint <= remainingMovement) {
+					x = this.activeWalkingCheckpoint.x;
+					y = this.activeWalkingCheckpoint.y;
+					remainingMovement -= distanceToPoint;
+					this.activeWalkingCheckpoint = this.currentWalkingCheckpoints.pop();
+					continue;
+				}
+				
+				var speedX = (this.activeWalkingCheckpoint.x - x) / distanceToPoint;
+				var speedY = (this.activeWalkingCheckpoint.y - y) / distanceToPoint;
+				
+				x += speedX * remainingMovement;
+				y += speedY * remainingMovement;
+				remainingMovement = 0;
+			}
+		}
+		
+		private function rotate(sinceLastTic:int) {
+			var disx:Number = this.activeWalkingCheckpoint.x - x;
+			var disy:Number = this.activeWalkingCheckpoint.y - y;
+			
+			var rad:Number = Math.atan2(disy, disx) + (Math.PI / 2);
+			var deg:Number = 360 * rad / (2 * Math.PI);
+			
+			var angle = deg - rotation;
+			
+			if (angle > 180) angle -= 360;
+			if (angle < -180) angle += 360;
+			
+			var toRotate = Math.min(Math.abs(angle), Configuration.GUARD_ROTATION_SPEED * sinceLastTic);
+			
+			if(Math.abs(angle) < Configuration.GUARD_ROTATION_SPEED * sinceLastTic) {
+				rotation = deg; 
+				return;
+			}
+			
+			if (angle > 0) {
+				rotation += toRotate;
+			}
+			else {
+				rotation -= toRotate;
+			}
 		}
 		
 		private function walkToCurrentWaypoint() : void {

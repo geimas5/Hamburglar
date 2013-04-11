@@ -23,10 +23,10 @@
 		public function setPlayerName(playerName:String) : void{
 			var url:String = urlPath+"player.php?action=setName&id="+playerId+"&name="+playerName+"&rand="+Math.random();
 			urlloader.load(new URLRequest(url));
-			urlloader.addEventListener(Event.COMPLETE,playerNameRegistered);
 		}
 		
 		private function playerNameFound(e:Event){
+			urlloader.removeEventListener(Event.COMPLETE,playerNameFound);
 			getPlayerNameCallBack(urlloader.data);
 			getPlayerNameCallBack = null;
 		}
@@ -52,11 +52,8 @@
 			urlloader.addEventListener(Event.COMPLETE,newPlayerRegistered);
 		}
 		
-		private function playerNameRegistered(e:Event){
-			//trace("name changed");
-		}
-		
 		private function newPlayerRegistered(e:Event){
+			urlloader.removeEventListener(Event.COMPLETE,newPlayerRegistered);
 			playerId = int(urlloader.data);
 			sharedObject.data.playerId = playerId;
 		}

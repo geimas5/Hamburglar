@@ -9,6 +9,8 @@
 		private var layout:LevelSelectButtonDesign;
 		
 		public function LevelSelectButton() {
+			this.buttonMode = true;
+			this.mouseChildren = false;
 		}
 		
 		[Inspectable(DefaultValue=0)]

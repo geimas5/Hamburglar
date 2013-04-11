@@ -2,13 +2,14 @@
 	
 	public class Configuration {
 
-		// Speed in seconds
-		public static const PLAYER_SPEED = 30;
+		public static const PLAYER_SPEED:Number = 30;// points. pr. seconds
 		
-		// Level tic intercal (ms)
-		public static const LEVEL_TIC_INTERVAL = 50;
+		public static const LEVEL_TIC_INTERVAL:Number = 50; // Level tic intercal (ms)
 		
-		public static const GUARD_DETECTION_RADIUS = 70;
-		public static const GUARD_SUSPECT_RADIUS = 100;
+		public static const GUARD_DETECTION_RADIUS:Number = 70; // in points
+		public static const GUARD_SUSPECT_RADIUS:Number = 100; // in points
+		public static const GUARD_WALKING_SPEED:Number = 30; // in points pr. sec
+		public static const GUARD_ROTATION_SPEED:Number = 1 / 3; // in degrees pr ms.
+		public static const GUARD_REACTION_TIME:Number = 1000; // in ms
 	}
 }

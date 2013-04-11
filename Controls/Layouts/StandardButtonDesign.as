@@ -4,13 +4,10 @@
 	
 	
 	public class StandardButtonDesign extends MovieClip {
-		
-		
-
 		private var _text:String;
 		
 		public function StandardButtonDesign() {
-			// constructor code
+			
 		}
 		
 		public function get text() : String  {
