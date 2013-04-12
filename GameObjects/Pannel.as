@@ -19,6 +19,8 @@
 		public function Pannel() {
 			addEventListener(Event.ADDED_TO_STAGE, onInit);
 			addEventListener(Event.REMOVED_FROM_STAGE, onDeInit);
+			
+			stop();
 		}
 		
 		public function onInit(e:Event) {
@@ -43,7 +45,7 @@
 				return;
 			if(MathHelper.distance(this.x, this.y, player.x, player.y) < 15) {
 				objectiveComplete = true;
-				trace("mø");
+				gotoAndStop("completed");
 			}
 		}
 	}
