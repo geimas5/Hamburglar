@@ -1,6 +1,9 @@
 ﻿package  {
 	
 	public class Configuration {
+		
+		public static const MAX_SCORE = 1000000;
+		public static const LEVEL_COUNT = 10;
 
 		public static const PLAYER_SPEED:Number = 30;// points. pr. seconds
 		

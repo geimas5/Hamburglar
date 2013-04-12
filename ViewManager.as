@@ -25,8 +25,8 @@
 			setView(new GameView(level));
 		}
 		
-		public function showLevelFinished(score:int) : void {
-			setView(new LevelFinishedView(score));
+		public function showLevelFinished(time:int,levelId:int) : void {
+			setView(new LevelFinishedView(time,levelId));
 		}
 		
 		public function showLevelSelect() : void {

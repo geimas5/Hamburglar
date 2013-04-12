@@ -13,16 +13,23 @@
 		private var _obstacleTester:ObstacleTester;
 		private var _player:Player = null;
 		
+		private var _cameraRotation:int;
 		private var _currentDegree:int = 0;
 		private var _rotationSpeed:int;
 		private var _rotationDegrees:int;
 		private var _rotationDirection:int = 1;
 		
 		public function Camera(){
+			addEventListener(Event.ADDED_TO_STAGE,onInit);
 			viewField.detectionRadius = Configuration.CAMERA_DETECTION_RADIUS;
 			viewField.suspectRadius = Configuration.CAMERA_SUSPECT_RADIUS;
 			viewField.viewAngle = Configuration.CAMERA_VIEW_ANGLE;
 		}
+		
+		private function onInit(e:Event) : void{
+			_cameraRotation = this.rotation;
+		}
+		
 		
 		public function set obstacleTester(obstacleTester:ObstacleTester) : void {
 			this._obstacleTester = obstacleTester;
@@ -74,11 +81,7 @@
 			else if(_rotationDirection < 0)
 				_currentDegree -= _rotationSpeed;
 				
-			this.rotation = _currentDegree;
-			//_currentDegree;
-			//_rotationSpeed;
-			//_rotationDegrees;
-			
+			this.rotation = _cameraRotation + _currentDegree;
 		}
 		
 		public function tic(sinceLastTic:int) : void{

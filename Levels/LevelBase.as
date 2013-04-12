@@ -31,9 +31,11 @@
 		private var _player:Player;
 		
 		private var _gameOverCallback:Function = null;
+		private var _gameFinnishedCallback:Function = null;
 		
-		public function LevelBase(gameOverCallback:Function) {
+		public function LevelBase(gameOverCallback:Function,gameFinnishedCallback:Function) {
 			_gameOverCallback = gameOverCallback;
+			_gameFinnishedCallback = gameFinnishedCallback;
 			this.addEventListener(Event.ADDED_TO_STAGE, onInit);
 		}
 		
@@ -181,7 +183,7 @@
 		
 		private function finishedLevel() {
 			if(elevator.isAvalable() && elevator.hitTestObject(_player)) {
-				this._gameOverCallback();
+				this._gameFinnishedCallback();
 				pause();
 				return true;
 			}

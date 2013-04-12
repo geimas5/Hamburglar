@@ -17,8 +17,10 @@
 		private var gameOverDialog:GameOverDialog;
 		private var isPaused:Boolean = false;
 		private var _ticTimer:Timer = new Timer(Configuration.GAME_TIC_INTERVAL);
+		private var _currentLevelId:int;
 		
 		public function GameView(level:int) {
+			_currentLevelId = level;
 			setLevel(level);
 			addEventListener(Event.ADDED_TO_STAGE, onInit);
 		}
@@ -58,7 +60,7 @@
 			if(currentLevel != null)
 				removeChild(currentLevel);
 				
-			currentLevel = LevelFactory.createLevel(level, gameOver);
+			currentLevel = LevelFactory.createLevel(level, gameOver, levelFinished);
 			addChild(currentLevel);
 			currentLevel.resume();
 		}
@@ -86,7 +88,7 @@
 		}
 		
 		private function levelFinished(){
-			getViewManager().showLevelFinished(0);
+			getViewManager().showLevelFinished(currentLevel.getLapseTime(),_currentLevelId);
 		}
 	}
 }

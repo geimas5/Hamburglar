@@ -4,8 +4,9 @@
 	import Levels.*;
 	
 	public class Level8 extends LevelBase {
-		public function Level8(gameOverCallback:Function) {
-			super(gameOverCallback);
+		public function Level8(gameOverCallback:Function,gameFinnishedCallback:Function) {
+			super(gameOverCallback,gameFinnishedCallback);
 		}
 	}
 }
+

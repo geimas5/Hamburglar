@@ -5,8 +5,9 @@
 	
 	
 	public class Level2 extends LevelBase {
-		public function Level2(gameOverCallback:Function) {
-			super(gameOverCallback);
+		public function Level2(gameOverCallback:Function,gameFinnishedCallback:Function) {
+			super(gameOverCallback,gameFinnishedCallback);
 		}
 	}
 }
+
