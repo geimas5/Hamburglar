@@ -13,7 +13,6 @@
 		private var _lastPosition:Rectangle = null;
 		
 		// Initializing to avoid null test
-		private var _obstacles:Array = new Array();
 		private var _radius:Number = 100;
 		private var _viewAngle:Number = Math.PI / 3 ;
 		private var _curveAngle:Number = Math.PI / 180;
@@ -136,7 +135,7 @@
 			for(var i:Number = _radius; i > 0 ; i-= 1) {
 				var testPoint:Point = this.localToGlobal(new Point(i * xSpeed, i * ySpeed));
 				
-				if(this.obstacleTester.hitTestCoord(testPoint.x, testPoint.y))
+				if(this._obstacleTester.hitTestCoord(testPoint.x, testPoint.y))
 					highestPoint = i - 1;
 			}
 			
