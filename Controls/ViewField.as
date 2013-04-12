@@ -27,6 +27,10 @@
 		
 		private var _obstacleTester:ObstacleTester = null;
 		
+		public function ViewField() {
+			//this.alpha = 0.5;
+		}
+		
 		public function get obstacleTester() : ObstacleTester {
 			return this._obstacleTester;
 		}
@@ -144,7 +148,6 @@
 		
 		private function createViewFieldTriangle(startAngle:Number, endAngle:Number, radius:int):Shape {
 			var triangle:Shape = new Shape();
-			//triangle.graphics.beginFill(0x2147AB);
 			
 			var ratio:Number = Number(_detectionRadius) / Number(_suspectRadius);
 			var detectionRatio = ratio * 255;

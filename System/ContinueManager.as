@@ -10,11 +10,22 @@
 		private var startView:StartView;
 		private var playerManager:PlayerManager;
 		private var enableContinueButtonCallBack:Function;
+		private var enableNextLevelButtonCallBack:Function;
 		private var continueLevel:int;
+		private var _nextLevel:int;
 		
 		public function ContinueManager(playerManager:PlayerManager){
 			this.playerManager = playerManager;
 			urlloader = new URLLoader();
+		}
+		
+		public function getNextLevel(levelId:int) : int{
+			return levelId+1;
+		}
+		
+		public function hasNextLevel(levelId:int) :Boolean{
+			if(levelId + 1 <= Configuration.MAX_SCORE)return true;
+			return false;
 		}
 		
 		public function hasContinueLevel(enableContinueButtonCallBack:Function) : void{

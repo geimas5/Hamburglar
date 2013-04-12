@@ -38,17 +38,30 @@
 				y += distance;
 				this.rotation = 180;
 			}
+			if(this._obstacleTester != null && this._obstacleTester.hitTest(this)){
+				y = oldY;
+			}
 			if(_keyboardMonitor.getKeyState(Keyboard.LEFT)) {
 				x -= distance;
 				this.rotation = 270;
+				if(_keyboardMonitor.getKeyState(Keyboard.UP)) {
+					this.rotation = 315;
+				}
+				else if(_keyboardMonitor.getKeyState(Keyboard.DOWN)) {
+					this.rotation = 225;
+				}
 			}
 			if(_keyboardMonitor.getKeyState(Keyboard.RIGHT)) {
 				x += distance;
 				this.rotation = 90;
+				if(_keyboardMonitor.getKeyState(Keyboard.UP)) {
+					this.rotation = 45;
+				}
+				else if(_keyboardMonitor.getKeyState(Keyboard.DOWN)) {
+					this.rotation = 135;
+				}
 			}
-				
 			if(this._obstacleTester != null && this._obstacleTester.hitTest(this)){
-				y = oldY;
 				x = oldX;
 			}
 		}

@@ -78,7 +78,7 @@
 		}
 		
 		private function retry(e:Event) : void{
-			getViewManager()
+			getViewManager().showGame(_levelId);
 		}
 		
 		private function mainMenu(e:Event) : void{
