@@ -110,7 +110,7 @@
 				if(isSuspected()) {
 					this._currentState = Guard.SUSPICTION_STATE;
 					this._reactionTimeLeft = Configuration.GUARD_REACTION_TIME;
-					this.walkTo(new Point(this._player.x, this._player.y));
+					this.activeWalkingCheckpoint = new Point(this._player.x, this._player.y);
 					this.rotateToPoint(new Point(this._player.x, this._player.y));
 					SoundEffects.GuardSuspect();
 				}

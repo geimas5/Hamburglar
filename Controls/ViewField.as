@@ -73,8 +73,8 @@
 			
 			var playerBounds:Rectangle = player.getBounds(DisplayObject(player).root);
 			
-			var distanceToPlayer:Number = MathHelper.distance(parent.x, parent.y, playerBounds.x + (playerBounds.width / 2), playerBounds.y + (playerBounds.height / 2));
-			trace(distanceToPlayer);
+			var distanceToPlayer:Number = MathHelper.distance(parent.x, parent.y, playerBounds.x, playerBounds.y);
+			distanceToPlayer -= playerBounds.width;
 			
 			if(distanceToPlayer < this.detectionRadius)
 				return new DetectionResult(null, false);
