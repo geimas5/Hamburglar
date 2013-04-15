@@ -69,12 +69,16 @@
 			if(e.keyCode != Keyboard.P)
 				return;
 			
-			if(!isPaused)
+			if(!isPaused)	{
 				addChild(pauseMenu);
-			else
+				isPaused = !isPaused;
+				currentLevel.pause();
+			}
+			else	{
 				removeChild(pauseMenu)
-			isPaused = !isPaused;
-			currentLevel.pause();
+				isPaused = !isPaused;
+				currentLevel.resume();
+			}
 		}
 		
 		public function resume() : void {
