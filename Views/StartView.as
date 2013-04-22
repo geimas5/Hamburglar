@@ -10,8 +10,14 @@
 		
 		public function StartView() {
 			playerManager = new PlayerManager();
-			continueManager = new ContinueManager(playerManager);
+			playerManager.activate(playerManagerReady);
 			addEventListener(Event.ADDED_TO_STAGE, initButtons);
+		}
+		
+		public function playerManagerReady() : void{
+			continueManager = new ContinueManager(playerManager);
+			continueManager.hasContinueLevel(enableContinueButton);
+			playerManager.getPlayerName(updateNameLabel);
 		}
 		
 		public function getPlayerManager() : PlayerManager{
@@ -27,8 +33,6 @@
 			startGameButton.enabled = false;
 			levelSelectButton.addEventListener(MouseEvent.CLICK, showLevelSelectView);
 			setNameButton.addEventListener(MouseEvent.CLICK, callSetPlayerName);
-			playerManager.getPlayerName(updateNameLabel);
-			continueManager.hasContinueLevel(enableContinueButton);
 		}
 		
 		public function callSetPlayerName(e:Event) : void{

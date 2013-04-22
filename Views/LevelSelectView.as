@@ -16,9 +16,11 @@
 			scoreManager = new ScoreManager();
 			updateLevelScoreLabel("0");
 		}
-	
-		public function init(evt:Event) : void {
+		
+		
+		public function playerManagerReady() : void{
 			startGameButton.addEventListener(MouseEvent.CLICK, startGame);
+			
 			selectLevel(1);
 			for(var i:int = 0; i < numChildren; i++) {
 			    var child:DisplayObject = getChildAt(i);
@@ -27,6 +29,10 @@
 					child.addEventListener(MouseEvent.CLICK, onSelectLevel);
 				}
 			}
+		}
+		
+		public function init(evt:Event) : void {
+			scoreManager.getPlayerManager().activate(playerManagerReady);
 		}
 		
 		public function updateLevelScoreLabel(score:String) : void{

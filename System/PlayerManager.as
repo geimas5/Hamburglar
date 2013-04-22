@@ -5,42 +5,49 @@
 	public class PlayerManager {
 		public static var urlPath:String = "http://frigg.hiof.no/spillprg_v134/rc/php/";
 		private var urlloader:URLLoader;
-		private var playerId:int;
-		private var sharedObject:SharedObject;
-		private var getPlayerNameCallBack:Function = null;
+		private var _playerId:int;
+		private var _sharedObject:SharedObject;
+		private var _getPlayerNameCallBack:Function = null;
+		private var _gotPlayerIdCallBack:Function = null;
+		
 		
 		public function PlayerManager(){
+		}
+		
+		public function activate(gotPlayerIdCallBack:Function):void{
+			_gotPlayerIdCallBack = gotPlayerIdCallBack;
 			urlloader = new URLLoader();
-			sharedObject = SharedObject.getLocal("Hamburglar");
+			_sharedObject = SharedObject.getLocal("Hamburglar","/");
 			if(isRegistered()){
-				playerId = sharedObject.data.playerId;
+				_playerId = _sharedObject.data.playerId;
+				_gotPlayerIdCallBack();	
 			}
 			else{
 				registerNewPlayer();
-			}
+			}		
 		}
 		
 		public function setPlayerName(playerName:String) : void{
-			var url:String = urlPath+"player.php?action=setName&id="+playerId+"&name="+playerName+"&rand="+Math.random();
+			var url:String = urlPath+"player.php?action=setName&id="+_playerId+"&name="+playerName+"&rand="+Math.random();
 			urlloader.load(new URLRequest(url));
 		}
 		
 		private function playerNameFound(e:Event){
 			urlloader.removeEventListener(Event.COMPLETE,playerNameFound);
-			getPlayerNameCallBack(urlloader.data);
-			getPlayerNameCallBack = null;
+			_getPlayerNameCallBack(urlloader.data);
+			_getPlayerNameCallBack = null;
 		}
 		
 		public function getPlayerName(getPlayerNameCallBack:Function) : void{
-			this.getPlayerNameCallBack = getPlayerNameCallBack;
+			_getPlayerNameCallBack = getPlayerNameCallBack;
 
-			var url:String = urlPath+"player.php?action=getName&id="+playerId+"&rand="+Math.random();
+			var url:String = urlPath+"player.php?action=getName&id="+_playerId+"&rand="+Math.random();
 			urlloader.load(new URLRequest(url));
 			urlloader.addEventListener(Event.COMPLETE,playerNameFound);
 		}
 		
 		private function isRegistered():Boolean{
-			if(sharedObject.data.hasOwnProperty("playerId")){
+			if(_sharedObject.data.playerId != undefined){
 				return true;
 			}
 			return false;
@@ -54,12 +61,14 @@
 		
 		private function newPlayerRegistered(e:Event){
 			urlloader.removeEventListener(Event.COMPLETE,newPlayerRegistered);
-			playerId = int(urlloader.data);
-			sharedObject.data.playerId = playerId;
+			_playerId = int(urlloader.data);
+			_sharedObject.data.playerId = _playerId;
+			_sharedObject.flush(100);
+			_gotPlayerIdCallBack();	
 		}
 		
 		public function getPlayerId():int{
-			return playerId;
+			return _playerId;
 		}
 	}
 }

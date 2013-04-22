@@ -15,8 +15,12 @@
 			_time = time;
 			_score = (Configuration.MAX_SCORE - time) < 0 ? 0 : (Configuration.MAX_SCORE - time);
 			_levelId = levelId;
-			_scoreManager.submitLevelScore(_levelId,_time,_score,scoreSubmitted);
+			_scoreManager.getPlayerManager().activate(playerManagerReady);
 			addEventListener(Event.ADDED_TO_STAGE,onInit);
+		}
+		
+		public function playerManagerReady() : void{
+			_scoreManager.submitLevelScore(_levelId,_time,_score,scoreSubmitted);
 		}
 		
 		private function onInit(e:Event) : void{

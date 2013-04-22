@@ -28,6 +28,8 @@
 		override public function getBackgroundMusic() : Array {
 			var playlist:Array = new Array();
 			playlist.push(new LevelMusic());
+			playlist.push(new LevelMusic1());
+			playlist.push(new LevelMusic2());
 			return playlist;
 		}
 		

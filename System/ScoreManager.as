@@ -16,6 +16,10 @@
 			urlloader = new URLLoader();
 		}
 		
+		public function getPlayerManager() : PlayerManager{
+			return playerManager;
+		}
+		
 		public function getLevelScore(level,callBackSelectLevel:Function): void{
 			this.callBackSelectLevel = callBackSelectLevel;
 			var url:String = urlPath+"getScores.php?view=level&level="+level+"&id="+ playerManager.getPlayerId()+"&rand="+Math.random();
