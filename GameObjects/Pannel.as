@@ -1,15 +1,14 @@
 ﻿package GameObjects {
 	
 	import flash.display.*;
-	import GameObjects.*;
 	import flash.events.KeyboardEvent;
 	import flash.ui.Keyboard;
-	import Controls.*;
-	import Pathfinding.*;
-	import Obstacles.*;
-	import System.*;
 	import flash.events.*;
 	import flash.geom.*;
+	import Controls.*;
+	import GameObjects.*;
+	import Pathfinding.*;
+	import System.*;
 	
 	public class Pannel extends Obstacle implements IObjective, IPlayerAware  {		
 		
@@ -25,25 +24,24 @@
 			stop();
 		}
 		
-		public function onInit(e:Event) {
-			stage.addEventListener(KeyboardEvent.KEY_DOWN, onClick);
-			avalableRectangle = new Rectangle(this.x, this.y, this.width + 7, this.height + 7);
-		}
-		
-		public function onDeInit(e:Event) {
-			stage.removeEventListener(KeyboardEvent.KEY_DOWN, onClick);
-		}
-		
 		public function setPlayer(player:Player) : void {
 			this.player = player;
 		}
-		
 		
 		public function isCompleted() : Boolean{
 			return objectiveComplete;
 		}
 		
-		public function onClick(e:KeyboardEvent) : void {
+		private function onInit(e:Event) {
+			stage.addEventListener(KeyboardEvent.KEY_DOWN, onClick);
+			avalableRectangle = new Rectangle(this.x, this.y, this.width + 7, this.height + 7);
+		}
+		
+		private function onDeInit(e:Event) {
+			stage.removeEventListener(KeyboardEvent.KEY_DOWN, onClick);
+		}
+		
+		private function onClick(e:KeyboardEvent) : void {
 			if(e.keyCode != Keyboard.SPACE)
 				return;
 			

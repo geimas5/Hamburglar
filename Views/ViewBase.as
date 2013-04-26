@@ -1,5 +1,6 @@
 ﻿package Views {
 	import flash.display.*;
+	import System.*;
 	
 	public class ViewBase extends MovieClip {
 	

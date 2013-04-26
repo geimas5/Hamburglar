@@ -1,6 +1,7 @@
 ﻿package Dialogs {
 	import flash.display.*;
 	import flash.events.*;
+	import System.*;
 	
 	public class GameOverDialog extends DialogBase {
 		

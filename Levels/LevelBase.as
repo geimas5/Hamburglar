@@ -1,13 +1,12 @@
 ﻿package Levels {
 	import flash.display.*;
+	import flash.events.*;
+	import flash.utils.*;
+	import fl.controls.*;
 	import GameObjects.*;
 	import Controls.*;
 	import Pathfinding.*;
-	import Obstacles.*;
 	import System.*;
-	import flash.events.*;
-	import flash.utils.*;
-	import fl.controls.BaseButton;
 	
 	public class LevelBase extends MovieClip {
 		private var obstacles:Array = new Array();
@@ -33,7 +32,7 @@
 		private var _gameOverCallback:Function = null;
 		private var _gameFinnishedCallback:Function = null;
 		
-		public function LevelBase(gameOverCallback:Function,gameFinnishedCallback:Function) {
+		public function LevelBase(gameOverCallback:Function, gameFinnishedCallback:Function) {
 			_gameOverCallback = gameOverCallback;
 			_gameFinnishedCallback = gameFinnishedCallback;
 			this.addEventListener(Event.ADDED_TO_STAGE, onInit);
@@ -58,7 +57,7 @@
 			return true;
 		}
 		
-		public function getLapseTime() : int{
+		public function getLapseTime() : int {
 			return _lapseTime;
 		}
 		
@@ -126,11 +125,11 @@
 			buildGraph();
 		}
 		
-		private function addGuard(guard:Guard) {
+		private function addGuard(guard:Guard) : void {
 			this.guards[guard.id] = guard;
 		}
 		
-		private function addWaypoint(waypoint:Waypoint) {
+		private function addWaypoint(waypoint:Waypoint) : void {
 			if(!(waypoint.guardId in this.waypoints)) {
 				this.waypoints[waypoint.guardId] = new Array();
 			}
@@ -143,7 +142,7 @@
 			this._graph = builder.buildGraph();
 		}
 		
-		private function initializeGuards() {
+		private function initializeGuards() : void {
 			
 			for(var i:String in this.guards) {
 				var guard:Guard = Guard(this.guards[Number(i)]);
@@ -158,17 +157,17 @@
 			}
 		}
 		
-		private function initializeCameras(){
+		private function initializeCameras() : void {
 			for each(var camera:Camera in this.cameras) {
 				 camera.obstacleTester = this._obstacleTester;
 			}
 		}
 		
-		private function initializePlayer() {
+		private function initializePlayer() : void {
 			 _player.obstacleTester = _obstacleTester;
 		}
 		
-		private function detectPlayer() {
+		private function detectPlayer() : Boolean {
 			for each(var object:ISecurityObject in this.securityObjects){
 				if(object.isDeteced()) {
 					SoundEffects.GameOver();
@@ -181,12 +180,14 @@
 			return false;
 		}
 		
-		private function finishedLevel() {
+		private function finishedLevel() : Boolean {
 			if(elevator.isAvalable() && elevator.hitTestObject(_player)) {
 				this._gameFinnishedCallback();
 				pause();
 				return true;
 			}
+			
+			return false;
 		}
 	}
 }

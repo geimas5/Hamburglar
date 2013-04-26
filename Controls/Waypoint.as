@@ -1,16 +1,12 @@
 ﻿package Controls {
 	
-	import flash.display.MovieClip;
+	import flash.display.*;
 	import fl.core.*;
 	
 	public class Waypoint extends UIComponent {
 		
 		private var _guardId:Number = 0;
 		private var _waypointId:Number = 0;
-		
-		public function Waypoint() {
-			// constructor code
-		}
 		
 		[Inspectable(defaultValue=0)]
 		public function get guardId() : Number{
@@ -22,7 +18,7 @@
 		}
 		
 		[Inspectable(defaultValue=0)]
-		public function get waypointId() : Number{
+		public function get waypointId() : Number {
 			return this._waypointId;
 		}
 		

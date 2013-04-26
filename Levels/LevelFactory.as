@@ -2,7 +2,7 @@
 	
 	public class LevelFactory {
 
-		public static function createLevel(levelId:int, gameOverCallback:Function,gameFinnishedCallback:Function) : LevelBase {
+		public static function createLevel(levelId:int, gameOverCallback:Function, gameFinnishedCallback:Function) : LevelBase {
 			var level:LevelBase = null;
 			switch(levelId){
 				case 1: return new Level1(gameOverCallback, gameFinnishedCallback);

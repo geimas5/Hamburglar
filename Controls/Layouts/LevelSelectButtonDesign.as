@@ -1,14 +1,9 @@
 ﻿package Controls.Layouts {
 	
-	import flash.display.MovieClip;
-	
+	import flash.display.*;
 	
 	public class LevelSelectButtonDesign extends MovieClip {
 		private var _levelId:int;
-		
-		public function LevelSelectButtonDesign() {
-			// constructor code
-		}
 		
 		public function get levelId() : int {
 			return this._levelId;
@@ -19,5 +14,4 @@
 			this.idLevelLabel.text = String(levelId);
 		}
 	}
-	
 }

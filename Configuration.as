@@ -22,5 +22,7 @@
 		public static const GUARD_ROTATION_SPEED:Number = 1 / 3; // in degrees pr ms.
 		public static const GUARD_REACTION_TIME:Number = 1000; // in ms
 		
+		public static const HIGHSCORE_URL:String = "http://frigg.hiof.no/spillprg_v134/rc/php/";
+		
 	}
 }

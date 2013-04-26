@@ -1,7 +1,7 @@
 ﻿package System {
 	
 	import flash.display.*;
-	import Sounds.Effecs.*;
+	import Sounds.Effects.*;
 	
 	public class SoundEffects {		
 		public static function GameOver() : void {
@@ -10,7 +10,7 @@
 		}
 		
 		public static function GuardSuspect() : void {
-			var sound:Sounds.Effecs.GuardSuspectSound = new Sounds.Effecs.GuardSuspectSound();
+			var sound:GuardSuspectSound = new GuardSuspectSound();
 			sound.play();
 		}
 	}

@@ -15,14 +15,14 @@
 			this.player = player;
 		}
 		
-		public function tic(sinceLastTic:int) : void{
-			if(!objectiveComplete && player.hitTestObject(this))	{
+		public function tic(sinceLastTic:int) : void {
+			if(!objectiveComplete && player.hitTestObject(this)) {
 				objectiveComplete = true;
 				parent.removeChild(this);
 			}
 		}
 		
-		public function isCompleted() : Boolean{
+		public function isCompleted() : Boolean {
 			return objectiveComplete;
 		}
 	}

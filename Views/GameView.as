@@ -13,7 +13,7 @@
 		private var levelId:int;
 		
 		private var currentLevel:LevelBase;
-		private var pauseMenu:PauseMenu;
+		private var pauseMenuDialog:PauseMenuDialog;
 		private var gameOverDialog:GameOverDialog;
 		private var isPaused:Boolean = false;
 		private var _ticTimer:Timer = new Timer(Configuration.GAME_TIC_INTERVAL);
@@ -33,12 +33,17 @@
 			return playlist;
 		}
 		
+		public function resume() : void {
+			pauseMenuDialog.hide();
+			isPaused = !isPaused;
+			currentLevel.resume();
+		}
+		
 		private function onInit(e:Event) {
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPress);
 			gameOverDialog = new GameOverDialog(this, levelId, getViewManager());
-			pauseMenu = new PauseMenu(getViewManager(), this);
-			pauseMenu.x = (width / 2) - (pauseMenu.width / 2);
-			pauseMenu.y = (height / 2) - (pauseMenu.height / 2);
+			pauseMenuDialog = new PauseMenuDialog(this, getViewManager(), this);
+			
 			_ticTimer.addEventListener(TimerEvent.TIMER, onTic);
 			_ticTimer.start();
 		}
@@ -52,7 +57,7 @@
 		
 		private function twoDigit(digits:int){
 			var digit:String = String(digits);
-			if(digit.length > 1)return digit;
+			if(digit.length > 1) return digit;
 			return "0" + digit;
 
 		}
@@ -71,18 +76,15 @@
 			if(e.keyCode != Keyboard.P)
 				return;
 			
-			if(!isPaused)
-				addChild(pauseMenu);
-			else
-				removeChild(pauseMenu)
+			if(!isPaused) {
+				pauseMenuDialog.show();
+				currentLevel.pause();
+			}
+			else {
+				pauseMenuDialog.hide();
+				currentLevel.resume();
+			}
 			isPaused = !isPaused;
-			currentLevel.pause();
-		}
-		
-		public function resume() : void {
-			removeChild(pauseMenu);
-			isPaused = !isPaused;
-			currentLevel.resume();
 		}
 		
 		private function gameOver() {

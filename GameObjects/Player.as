@@ -1,8 +1,8 @@
 ﻿package GameObjects {
-	import flash.display.MovieClip;
-	import flash.ui.Keyboard;
-	import System.ObstacleTester;
+	import flash.display.*;
+	import flash.ui.*;
 	import flash.events.*;
+	import System.*;
 	
 	public class Player extends MovieClip implements ITimeAware {
 		private var _keyboardMonitor:KeyboardMonitor = KeyboardMonitor.getInstance();
@@ -10,10 +10,10 @@
 		private var _obstacleTester:ObstacleTester = null;
 
 		public function Player() {
-			addEventListener(Event.ADDED_TO_STAGE,onInit);
+			addEventListener(Event.ADDED_TO_STAGE, onInit);
 		}
 		
-		public function onInit(e:Event) : void{
+		public function onInit(e:Event) : void {
 			man.gotoAndStop(1);
 		}
 		
@@ -29,7 +29,7 @@
 			movePlayer(sinceLastTic);
 		}
 		
-		private function movePlayer(sinceLastTic:int){
+		private function movePlayer(sinceLastTic:int) {
 			var oldX = this.x;
 			var oldY = this.y;
 			man.stop();
@@ -45,7 +45,7 @@
 				this.rotation = 180;
 				man.play();
 			}
-			if(this._obstacleTester != null && this._obstacleTester.hitTest(this)){
+			if(this._obstacleTester != null && this._obstacleTester.hitTest(this)) {
 				y = oldY;
 			}
 			if(_keyboardMonitor.getKeyState(Keyboard.LEFT) || _keyboardMonitor.getKeyState(Keyboard.A)) {

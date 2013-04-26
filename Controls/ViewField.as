@@ -4,8 +4,8 @@
 	import flash.geom.*;
 	import flash.utils.*;
 	import fl.motion.easing.*;
+	import GameObjects.*;
 	import System.*;
-	import GameObjects.Player;
 	
 	public class ViewField extends MovieClip {
 		
@@ -26,10 +26,6 @@
 		private var _currentSegments = new Array();
 		
 		private var _obstacleTester:ObstacleTester = null;
-		
-		public function ViewField() {
-			//this.alpha = 0.5;
-		}
 		
 		public function get obstacleTester() : ObstacleTester {
 			return this._obstacleTester;
@@ -71,10 +67,11 @@
 		public function detectPlayer(player:Player) : DetectionResult {						
 			if(!HitTestHelper.isHit(player.root, player, this)) return null;
 			
-			var playerBounds:Rectangle = player.getBounds(DisplayObject(player).root);
+			//var playerBounds:Rectangle = player.getBounds(DisplayObject(player).root);
 			
-			var distanceToPlayer:Number = MathHelper.distance(parent.x, parent.y, playerBounds.x, playerBounds.y);
-			distanceToPlayer -= playerBounds.width;
+			var distanceToPlayer:Number = MathHelper.distance(parent.x, parent.y, player.x, player.y);
+			distanceToPlayer -= (player.width / 2);
+			trace(distanceToPlayer);
 			
 			if(distanceToPlayer < this.detectionRadius)
 				return new DetectionResult(null, false);
@@ -85,7 +82,7 @@
 			return null;
 		}
 		
-		private function hasMoved(){
+		private function hasMoved() : Boolean {
 			var bounds:Rectangle = this.getBounds(root);
 			if(this._lastPosition == null || !bounds.equals(this._lastPosition)) {
 				this._lastPosition = bounds;
@@ -95,7 +92,7 @@
 			return false;
 		}
 		
-		private function drawViewField() {
+		private function drawViewField() : void {
 			for each(var o:DisplayObject in _currentSegments){
 				removeChild(o);
 			}
@@ -127,7 +124,7 @@
 			}
 		}
 		
-		private function findClippedTriangle(angle:Number) :Shape {
+		private function findClippedTriangle(angle:Number) : Shape {
 			var startPoint = new Point(0, 0);
 			var endPoint = calculatePoint(angle, _radius);
 			
@@ -175,7 +172,7 @@
 			return triangle;
 		}
 		
-		private function calculatePoint(angle:Number, radius:Number):Point {
+		private function calculatePoint(angle:Number, radius:Number) : Point {
 			return new Point(calculatePointX(angle, radius), calculatePointY(angle, radius));
 		}
 		

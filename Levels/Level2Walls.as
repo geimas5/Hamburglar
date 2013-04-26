@@ -1,15 +1,8 @@
 ﻿package Levels {
 	
-	import flash.display.MovieClip;
-	import Obstacles.*;
+	import GameObjects.*;
 	
-	
-	public class Level2Walls extends Wall {
+	public class Level2Walls extends Obstacle {
 		
-		
-		public function Level2Walls() {
-			// constructor code
-		}
 	}
-	
 }

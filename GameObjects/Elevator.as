@@ -7,7 +7,7 @@
 		private var player:Player;
 		private var avalable:Boolean = false;
 		
-		public function Elevator(){
+		public function Elevator() {
 			stop();
 		}
 		

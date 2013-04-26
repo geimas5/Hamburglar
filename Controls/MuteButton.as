@@ -1,5 +1,5 @@
 ﻿package Controls {
-	import flash.display.MovieClip;
+	import flash.display.*;
 	import flash.events.*;
 	import flash.media.*;
 	

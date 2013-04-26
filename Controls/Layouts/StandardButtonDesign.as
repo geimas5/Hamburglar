@@ -2,13 +2,8 @@
 	
 	import flash.display.MovieClip;
 	
-	
 	public class StandardButtonDesign extends MovieClip {
 		private var _text:String;
-		
-		public function StandardButtonDesign() {
-			
-		}
 		
 		public function get text() : String  {
 			return this._text;

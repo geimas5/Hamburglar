@@ -1,18 +1,12 @@
 ﻿package Controls {
 	
-	import flash.display.MovieClip;
+	import flash.display.*;
 	import Levels.*;
-	
 	
 	public class LevelPreview extends MovieClip {
 		
 		private var _levelId:int;
 		private var _currentPreview:LevelBase;
-		
-		
-		public function LevelPreview() {
-			// constructor code
-		}
 		
 		public function get levelId() : int {
 			return this._levelId;
