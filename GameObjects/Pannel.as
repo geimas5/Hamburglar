@@ -34,7 +34,8 @@
 		
 		private function onInit(e:Event) {
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, onClick);
-			avalableRectangle = new Rectangle(this.x, this.y, this.width + 7, this.height + 7);
+			avalableRectangle = new Rectangle(this.x  - 2, this.y - 2, this.width + 4, this.height + 4);
+			
 		}
 		
 		private function onDeInit(e:Event) {
@@ -45,7 +46,7 @@
 			if(e.keyCode != Keyboard.SPACE)
 				return;
 			
-			if(avalableRectangle.intersects(new Rectangle(player.x, player.y, player.width, player.height))) {
+			if(avalableRectangle.intersects(player.getBounds(root))) {
 				objectiveComplete = true;
 				gotoAndStop("completed");
 			}

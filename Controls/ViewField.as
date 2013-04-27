@@ -67,11 +67,8 @@
 		public function detectPlayer(player:Player) : DetectionResult {						
 			if(!HitTestHelper.isHit(player.root, player, this)) return null;
 			
-			//var playerBounds:Rectangle = player.getBounds(DisplayObject(player).root);
-			
 			var distanceToPlayer:Number = MathHelper.distance(parent.x, parent.y, player.x, player.y);
 			distanceToPlayer -= (player.width / 2);
-			trace(distanceToPlayer);
 			
 			if(distanceToPlayer < this.detectionRadius)
 				return new DetectionResult(null, false);
