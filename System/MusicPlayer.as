@@ -25,7 +25,7 @@
 			playNext(null);
 		}
 		
-		public function playNext(e:Event) {
+		private function playNext(e:Event) {
 			if(soundChannel != null)
 				soundChannel.stop();
 				

@@ -18,7 +18,7 @@
 		}
 		
 		
-		public function playerManagerReady() : void{
+		private function playerManagerReady() : void{
 			startGameButton.addEventListener(MouseEvent.CLICK, startGame);
 			
 			selectLevel(1);
@@ -31,11 +31,11 @@
 			}
 		}
 		
-		public function init(evt:Event) : void {
+		private function init(evt:Event) : void {
 			scoreManager.getPlayerManager().activate(playerManagerReady);
 		}
 		
-		public function updateLevelScoreLabel(score:String) : void{
+		private function updateLevelScoreLabel(score:String) : void{
 			levelScoreLabel.text = score;
 		}
 		
@@ -45,7 +45,7 @@
 			return playlist;
 		}
 	
-		public function startGame(evt:MouseEvent) {
+		private function startGame(evt:MouseEvent) {
 			getViewManager().showGame(selectedLevel);
 		}
 		

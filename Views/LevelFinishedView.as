@@ -1,7 +1,6 @@
 ﻿package Views {
-	import System.PlayerManager;
 	import flash.events.*;
-	import System.ScoreManager;
+	import System.*;
 	
 	public class LevelFinishedView extends ViewBase {
 		
@@ -10,7 +9,7 @@
 		private var _levelId:int;
 		private var _time:int;
 
-		public function LevelFinishedView(time:int,levelId:int) {
+		public function LevelFinishedView(time:int, levelId:int) {
 			_scoreManager = new ScoreManager();
 			_time = time;
 			_score = (Configuration.MAX_SCORE - time) < 0 ? 0 : (Configuration.MAX_SCORE - time);
@@ -19,7 +18,7 @@
 			addEventListener(Event.ADDED_TO_STAGE,onInit);
 		}
 		
-		public function playerManagerReady() : void{
+		private function playerManagerReady() : void{
 			_scoreManager.submitLevelScore(_levelId,_time,_score,scoreSubmitted);
 		}
 		
@@ -46,15 +45,15 @@
 			mainMenuButton.addEventListener(MouseEvent.CLICK,mainMenu);
 		}
 		
-		public function setLevelIdLabel(level:int):void{
+		private function setLevelIdLabel(level:int):void{
 			levelIdLabel.text = "Level: " + level;
 		}
 		
-		public function setScoreLabel(score:int):void{
+		private function setScoreLabel(score:int):void{
 			scoreLabel.text = "" + score;
 		}
 		
-		public function setTimeLabel(time:int):void{
+		private function setTimeLabel(time:int):void{
 			time /= 1000;
 			var sec:int = time % 60;
 			var min:int = (time - sec) / 60;

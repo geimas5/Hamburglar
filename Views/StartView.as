@@ -14,40 +14,36 @@
 			addEventListener(Event.ADDED_TO_STAGE, initButtons);
 		}
 		
-		public function playerManagerReady() : void{
+		private function playerManagerReady() : void{
 			continueManager = new ContinueManager(playerManager);
 			continueManager.hasContinueLevel(enableContinueButton);
 			playerManager.getPlayerName(updateNameLabel);
 		}
 		
-		public function getPlayerManager() : PlayerManager{
-			return playerManager;
-		}
-		
-		public function enableContinueButton() : void {
+		private function enableContinueButton() : void {
 			startGameButton.enabled = true;
 			startGameButton.addEventListener(MouseEvent.CLICK, startGame);
 		}
 		
-		public function initButtons(evt:Event) : void {
+		private function initButtons(evt:Event) : void {
 			startGameButton.enabled = false;
 			levelSelectButton.addEventListener(MouseEvent.CLICK, showLevelSelectView);
 			setNameButton.addEventListener(MouseEvent.CLICK, callSetPlayerName);
 		}
 		
-		public function callSetPlayerName(e:Event) : void{
+		private function callSetPlayerName(e:Event) : void{
 			playerManager.setPlayerName(nameLabel.text);
 		}
 		
-		public function updateNameLabel(name:String) : void{
+		private function updateNameLabel(name:String) : void{
 			nameLabel.text = name;
 		}
 		
-		public function startGame (evt:MouseEvent) : void {
+		private function startGame (evt:MouseEvent) : void {
 			getViewManager().showGame(continueManager.getContinueLevel()); 
 		}
 		
-		public function showLevelSelectView (evt:MouseEvent) : void {
+		private function showLevelSelectView (evt:MouseEvent) : void {
 			getViewManager().showLevelSelect(); 
 		}
 		

@@ -13,10 +13,6 @@
 			addEventListener(Event.ADDED_TO_STAGE, onInit);
 		}
 		
-		public function onInit(e:Event) : void {
-			man.gotoAndStop(1);
-		}
-		
 		public function get obstacleTester() : ObstacleTester {
 			return this._obstacleTester;
 		}
@@ -27,6 +23,10 @@
 		
 		public function tic(sinceLastTic:int) : void {
 			movePlayer(sinceLastTic);
+		}
+		
+		private function onInit(e:Event) : void {
+			man.gotoAndStop(1);
 		}
 		
 		private function movePlayer(sinceLastTic:int) {

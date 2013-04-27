@@ -1,7 +1,6 @@
 ﻿package System {
 	import flash.display.*;
 	import Views.*;
-	import flash.events.Event;
 	
 	public class ViewManager extends MovieClip {
 
@@ -25,8 +24,8 @@
 			setView(new GameView(level));
 		}
 		
-		public function showLevelFinished(time:int,levelId:int) : void {
-			setView(new LevelFinishedView(time,levelId));
+		public function showLevelFinished(time:int, levelId:int) : void {
+			setView(new LevelFinishedView(time, levelId));
 		}
 		
 		public function showLevelSelect() : void {

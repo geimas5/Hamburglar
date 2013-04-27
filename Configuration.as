@@ -2,14 +2,14 @@
 	
 	public class Configuration {
 		
-		public static const MAX_SCORE = 1000000;
-		public static const LEVEL_COUNT = 10;
+		public static const MAX_SCORE:int = 1000000;
+		public static const LEVEL_COUNT:int = 10;
 
 		public static const PLAYER_SPEED:Number = 30;// points. pr. seconds
 		
 		public static const LEVEL_TIC_INTERVAL:Number = 50; // Level tic intercal (ms)
 		//Game tic interval (ms)
-		public static const GAME_TIC_INTERVAL = 200;
+		public static const GAME_TIC_INTERVAL:int = 200;
 		
 		public static const CAMERA_DETECTION_RADIUS:Number = 100;
 		public static const CAMERA_SUSPECT_RADIUS:Number = 100;

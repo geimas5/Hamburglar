@@ -12,7 +12,7 @@
 			this.buttonMode = true;
 		}
 		
-		public function onMuteButtonClick(evt:MouseEvent) : void {
+		private function onMuteButtonClick(evt:MouseEvent) : void {
 			setVolume((audioTransform.volume + 1) % 2);
 		}
 	
