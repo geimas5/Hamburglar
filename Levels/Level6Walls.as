@@ -4,6 +4,5 @@
 	
 	public class Level6Walls extends Obstacle {
 		
-		
 	}
 }

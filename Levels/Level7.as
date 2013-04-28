@@ -1,7 +1,6 @@
 ﻿package Levels {
 	
 	import flash.events.*;
-	import flash.display.*;
 	import GameObjects.*;
 	import Levels.*;
 	
@@ -23,4 +22,3 @@
 		}
 	}
 }
-
